@@ -1,0 +1,60 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
+
+version: '3.4'
+
+services:
+  lottoservice:
+    image: lottoservice
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+
+
+version: '3.4'
+
+services:
+  lottoservice:
+    image: lottoservice
+    build:
+      context: ./src/LottoService
+      dockerfile: ./Dockerfile
+    ports:
+      - 80
+    environment:
+      - RandomNumberService__Url=http://randomnumberservice
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+  randomnumberservice:
+    image: randomnumberservice
+    build:
+      context: ./src/RandomNumberService
+      dockerfile: ./Dockerfile
+    ports:
+      - 80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+  lottoweb:
+    image: lottoweb
+    build:
+      context: ./src/Web
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      - Api=http://lottoservice
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw

@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  lottoservice:
+    image: dlindemann/lottoservice:v1
+    build:
+      context: ./src/LottoService
+      dockerfile: ./Dockerfile
+    ports:
+      - 80
+    environment:
+      - RandomNumberService__Url=http://randomnumberservice
+  randomnumberservice:
+    image: dlindemann/randomnumberservice:v1
+    build:
+      context: ./src/RandomNumberService
+      dockerfile: ./Dockerfile
+    ports:
+      - 80
+  lottoweb:
+    image: dlindemann/lottoweb:v1
+    build:
+      context: ./src/Web
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      - Api=http://lottoservice

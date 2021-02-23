@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: lotto-web
+spec:
+    selector:
+        matchLabels:
+            app: lotto-web
+    template:
+        metadata:
+            labels:
+                app: lotto-web
+        spec:
+            containers:
+                -   name: lotto-web
+                    image: dlindemann/lottoweb:v1
+                    imagePullPolicy: IfNotPresent
+                    ports:
+                        -   containerPort: 80 # the application listens to this port
+                    resources:
+                        requests: # minimum resources required
+                            cpu: 100m
+                            memory: 64Mi
+                        limits: # maximum resources allocated
+                            cpu: 250m
+                            memory: 256Mi

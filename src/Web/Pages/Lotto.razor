@@ -1,0 +1,33 @@
+@page "/lotto"
+
+@using Web.Data
+@inject LottoService LottoService
+
+<h1>Lotto</h1>
+
+@if (_lottoNumbers == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <b>Lottozahlen</b><br/>
+    @foreach (var number in _lottoNumbers.Numbers)
+    {
+        <span>@number&nbsp;&nbsp;&nbsp;</span>
+    }
+    <br/><br/>
+    <b>Superzahl</b><br />
+    <span>@_lottoNumbers.SuperNumber</span>
+}
+
+@code {
+
+    private LottoService.LottoNumbers _lottoNumbers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _lottoNumbers = await LottoService.GetNumbers();
+    }
+
+}

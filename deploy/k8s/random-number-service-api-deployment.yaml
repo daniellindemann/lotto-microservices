@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: random-number-service-api
+spec:
+    selector:
+        matchLabels:
+            app: random-number-service-api
+    template:
+        metadata:
+            labels:
+                app: random-number-service-api
+        spec:
+            containers:
+                -   name: random-number-service-api
+                    image: dlindemann/randomnumberservice:v1
+                    imagePullPolicy: IfNotPresent
+                    ports:
+                        -   containerPort: 80 # the application listens to this port
+                    resources:
+                        requests: # minimum resources required
+                            cpu: 100m
+                            memory: 64Mi
+                        limits: # maximum resources allocated
+                            cpu: 250m
+                            memory: 256Mi

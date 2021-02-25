@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
     name: lotto-web
 spec:
+    replicas: 2
     selector:
         matchLabels:
             app: lotto-web
@@ -13,10 +14,13 @@ spec:
         spec:
             containers:
                 -   name: lotto-web
-                    image: dlindemann/lottoweb:v1
+                    image: localhost:4999/lottoweb
                     imagePullPolicy: IfNotPresent
                     ports:
                         -   containerPort: 80 # the application listens to this port
+                    env:
+                        -   name: Api
+                            value: http://lotto-service-api.lotto.svc.cluster.local
                     resources:
                         requests: # minimum resources required
                             cpu: 100m

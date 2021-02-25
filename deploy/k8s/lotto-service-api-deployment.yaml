@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
     name: lotto-service-api
 spec:
+    replicas: 2
     selector:
         matchLabels:
             app: lotto-service-api
@@ -13,10 +14,13 @@ spec:
         spec:
             containers:
                 -   name: lotto-service-api
-                    image: dlindemann/lottoservice:v1
+                    image: localhost:4999/lottoservice
                     imagePullPolicy: IfNotPresent
                     ports:
                         -   containerPort: 80 # the application listens to this port
+                    env:
+                        -   name: RandomNumberService__Url
+                            value: http://random-number-service-api.lotto.svc.cluster.local
                     resources:
                         requests: # minimum resources required
                             cpu: 100m

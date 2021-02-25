@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
     name: random-number-service-api
 spec:
+    replicas: 4
     selector:
         matchLabels:
             app: random-number-service-api
@@ -13,7 +14,7 @@ spec:
         spec:
             containers:
                 -   name: random-number-service-api
-                    image: dlindemann/randomnumberservice:v1
+                    image: localhost:4999/randomnumberservice
                     imagePullPolicy: IfNotPresent
                     ports:
                         -   containerPort: 80 # the application listens to this port

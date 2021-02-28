@@ -1,5 +1,7 @@
 using System;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using Moq;
 using RandomNumberService.Application.Common.Exceptions;
 using Xunit;
 using RandomNumberService = RandomNumberService.Infrastructure.RandomNumberService;
@@ -14,8 +16,9 @@ namespace RandomNumberService.UnitTests
             // arrange
             var min = 4;
             var max = 200;
+            var loggerMock = new Mock<ILogger<Infrastructure.RandomNumberService>>();
 
-            var sut = new Infrastructure.RandomNumberService();
+            var sut = new Infrastructure.RandomNumberService(loggerMock.Object);
 
             // act
             var number = sut.Generate(min, max);
@@ -29,8 +32,8 @@ namespace RandomNumberService.UnitTests
         public void Generate_SameMinAndMaxValue_ReturnsValueRangeException()
         {
             var minAndMax = 1;
-
-            var sut = new Infrastructure.RandomNumberService();
+            var loggerMock = new Mock<ILogger<Infrastructure.RandomNumberService>>();
+            var sut = new Infrastructure.RandomNumberService(loggerMock.Object);
 
             // act
             // assert
@@ -48,8 +51,8 @@ namespace RandomNumberService.UnitTests
             // arrange
             var min = 12;
             var max = 3;
-
-            var sut = new Infrastructure.RandomNumberService();
+            var loggerMock = new Mock<ILogger<Infrastructure.RandomNumberService>>();
+            var sut = new Infrastructure.RandomNumberService(loggerMock.Object);
 
             // act
             // assert

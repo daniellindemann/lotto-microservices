@@ -21,7 +21,14 @@ namespace LottoService.Controllers
         [HttpGet]
         public async Task<LottoFieldDto> Get()
         {
-            var data = await Mediator.Send(new GetLottoFieldQuery());
+            _logger.LogInformation("Retrieved get request");
+
+            _logger.LogTrace("Creating mediator request");
+            var mediatorRequest = new GetLottoFieldQuery();
+            _logger.LogTrace("Created {name} request", nameof(GetLottoFieldQuery));
+
+            var data = await Mediator.Send(mediatorRequest);
+            _logger.LogInformation("Lotto data is {@lottoData}", data);
             return data;
         }
     }

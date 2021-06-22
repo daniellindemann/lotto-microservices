@@ -24,7 +24,7 @@ namespace RandomNumberService.Controllers
         {
             _logger.LogInformation("Received GET request with {min} and {max} value", min, max);
             var number = _randomNumberService.Generate(min, max);
-            _logger.LogInformation("Generated number {number]", number);
+            _logger.LogInformation("Generated number {number}", number);
             return Ok(number);
         }
 

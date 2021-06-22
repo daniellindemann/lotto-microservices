@@ -45,12 +45,14 @@ namespace Web
             {
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                // do not use https - networking assumptions are not the job of the program
+                // app.UseHsts();
             }
 
+            // do not use https - networking assumptions are not the job of the program
             // app.UseHttpsRedirection();
-            app.UseStaticFiles();
 
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>

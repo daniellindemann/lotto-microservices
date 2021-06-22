@@ -35,6 +35,7 @@ namespace RandomNumberService
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RandomNumberService", Version = "v1" });
             });
+            services.AddHealthChecks();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,15 +44,20 @@ namespace RandomNumberService
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RandomNumberService v1"));
             }
 
+            // enable swagger, because it's a demo app
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RandomNumberService v1"));
+
+            // do not use https - networking assumptions are not the job of the program
             // app.UseHttpsRedirection();
 
             app.UseRouting();
-
             app.UseAuthorization();
+
+            // add health checks
+            app.UseHealthChecks("/health");
 
             app.UseEndpoints(endpoints =>
             {

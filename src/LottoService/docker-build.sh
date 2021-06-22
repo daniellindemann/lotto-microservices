@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t dlindemann/lottoservice:v1 $(dirname "$0")
+docker build -t dlindemann/lottoservice:0.0.1 $(dirname "$0")

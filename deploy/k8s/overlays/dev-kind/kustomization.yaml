@@ -1,0 +1,10 @@
+resources:
+- ../../base
+
+images:
+- name: dlindemann/lottoservice
+  newName: localhost:4999/dlindemann/lottoservice
+- name: dlindemann/randomnumberservice
+  newName: localhost:4999/dlindemann/randomnumberservice
+- name: dlindemann/lottoweb
+  newName: localhost:4999/dlindemann/lottoweb

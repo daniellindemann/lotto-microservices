@@ -2,22 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: web
-  name: web
-  namespace: lotto
+    app: lotto-service
+  name: lotto-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: web
+      app: lotto-service
   template:
     metadata:
       labels:
-        app: web
+        app: lotto-service
     spec:
       containers:
-      - image: dlindemann/lottoweb:0.0.1
-        name: lottoweb
+      - image: dlindemann/lottoservice:0.0.1
+        name: lottoservice
         ports:
         - containerPort: 5000
         resources:
@@ -28,5 +27,5 @@ spec:
             cpu: "250m"
             memory: "256Mi"
         env:
-        - name: Api
-          value: http://lotto-service:8080
+        - name: RandomNumberService__Url
+          value: http://random-number-service:8080

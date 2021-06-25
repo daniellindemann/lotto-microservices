@@ -4,7 +4,6 @@ metadata:
   name: ingress-web
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-  namespace: lotto
 spec:
   rules:
   - http:

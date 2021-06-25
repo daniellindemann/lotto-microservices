@@ -4,7 +4,6 @@ metadata:
   labels:
     app: lotto-service
   name: lotto-service
-  namespace: lotto
 spec:
   ports:
   - port: 8080

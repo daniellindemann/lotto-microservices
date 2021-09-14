@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,12 +29,15 @@ namespace LottoService.Application.LottoField.Queries.GetLottoField
             // get data
             _logger.LogInformation("Getting lotto field numbers");
             int lottoMin = 1, lottoMax = 49, lottoCount = 6;
+            Activity.Current?.SetTag("lotto.number.min", lottoMin).SetTag("lotto.number.max", lottoMax)
+                .SetTag("lotto.number.count", lottoCount);
             _logger.LogTrace("Asking for {count} numbers between {min} and {max}", lottoCount, lottoMin, lottoMax);
             var lottoNumbers = await GetUniqueNumbers(lottoMin, lottoMax, lottoCount);
             _logger.LogInformation("Got lotto field data {@lottoFieldData}", lottoNumbers);
 
             _logger.LogInformation("Getting super number");
             int superMin = 1, superMax = 9;
+            Activity.Current?.SetTag("superNumber.min", superMin).SetTag("superNumber.max", superMax);
             _logger.LogTrace("Asking for a number between {min} and {max}", superMin, superMax);
             var superNumber = await _randomNumberService.Generate(superMin, superMax);
             _logger.LogInformation("Got super number {superNumber}", superNumber);

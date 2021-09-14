@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Web.Data;
 
 namespace Web
@@ -32,6 +34,20 @@ namespace Web
 
             services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<LottoService>();
+
+            services.AddOpenTelemetryTracing(builder =>
+            {
+                var jaegerServiceName = Configuration.GetValue<string>("Jaeger:ServiceName") ?? "Web";
+                builder
+                    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(jaegerServiceName))
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation()
+                    .AddJaegerExporter(b =>
+                    {
+                        var jaegerHostname = System.Environment.GetEnvironmentVariable("Jaeger:HOSTNAME") ?? "localhost";
+                        b.AgentHost = jaegerHostname;
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using RandomNumberService.Application;
 using RandomNumberService.Application.Common.Interfaces;
 
@@ -28,9 +30,24 @@ namespace RandomNumberService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
             services.AddSingleton<IRandomNumberService, Infrastructure.RandomNumberService>();
 
-            services.AddControllers();
+            services.AddOpenTelemetryTracing(builder =>
+            {
+                var serviceName = Configuration.GetValue<string>("Jaeger:ServiceName") ?? "RandomNumberService";
+                builder
+                    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName))
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation()
+                    .AddJaegerExporter(b =>
+                    {
+                        var jaegerHostname = Environment.GetEnvironmentVariable("JAEGER_HOSTNAME") ?? "localhost";
+                        b.AgentHost = jaegerHostname;
+                    });
+
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RandomNumberService", Version = "v1" });

@@ -1,9 +1,13 @@
+using System;
+using LottoService.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 namespace LottoService
 {
@@ -19,9 +23,25 @@ namespace LottoService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+
             services.AddLottoService(Configuration);
 
-            services.AddControllers();
+            services.AddOpenTelemetryTracing(builder =>
+            {
+                var jaegerServiceName = Configuration.GetValue<string>("Jaeger:ServiceName") ?? "LottoService";
+                builder
+                    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(jaegerServiceName))
+                    .AddSource(nameof(RandomNumberService))
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation()
+                    .AddJaegerExporter(b =>
+                    {
+                        var jaegerHostname = Environment.GetEnvironmentVariable("Jaeger:HOSTNAME") ?? "localhost";
+                        b.AgentHost = jaegerHostname;
+                    });
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LottoService", Version = "v1" });

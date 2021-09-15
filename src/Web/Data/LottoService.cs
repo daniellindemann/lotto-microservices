@@ -22,6 +22,15 @@ namespace Web.Data
             return data;
         }
 
+        public async Task<IEnumerable<LottoNumbers>> GetHistory()
+        {
+            var response = await _httpClient.GetAsync($"{Environment.Api.TrimEnd('/')}/api/LottoNumber/history");
+            var data = JsonConvert.DeserializeObject<IEnumerable<LottoNumbers>>(
+                await response.Content.ReadAsStringAsync());
+
+            return data;
+        }
+
         public class LottoNumbers
         {
             public List<int> Numbers { get; set; }

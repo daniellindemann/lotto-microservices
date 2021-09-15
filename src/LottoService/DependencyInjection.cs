@@ -2,6 +2,7 @@ using System.Reflection;
 using LottoService.Application.Common.Interfaces;
 using LottoService.Application.Configuration;
 using LottoService.Infrastructure;
+using LottoService.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
@@ -20,8 +21,10 @@ namespace LottoService
                 return s;
             });
 
+            services.AddSingleton<IRedisContext, RedisContext>();
             services.AddHttpClient<IRandomNumberService, RandomNumberService>();
             services.AddScoped<IRandomNumberService, RandomNumberService>();
+
             services.AddMediatR(typeof(Startup));
 
             return services;

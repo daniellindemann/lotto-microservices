@@ -1,7 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using LottoService.Application.Common.Interfaces;
+using LottoService.Application.LottoField.Models;
+using LottoService.Application.LottoField.Queries.GetHistory;
 using LottoService.Application.LottoField.Queries.GetLottoField;
+using LottoService.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -10,12 +14,12 @@ namespace LottoService.Controllers
     public class LottoNumberController : ApiControllerBase
     {
         private readonly ILogger<LottoNumberController> _logger;
-        private readonly IRandomNumberService _randomNumberService;
+        private readonly IRedisContext _redisContext;
 
-        public LottoNumberController(ILogger<LottoNumberController> logger, IRandomNumberService randomNumberService)
+        public LottoNumberController(ILogger<LottoNumberController> logger, IRedisContext redisContext)
         {
             _logger = logger;
-            _randomNumberService = randomNumberService;
+            _redisContext = redisContext;
         }
 
         [HttpGet]
@@ -29,6 +33,20 @@ namespace LottoService.Controllers
 
             var data = await Mediator.Send(mediatorRequest);
             _logger.LogInformation("Lotto data is {@lottoData}", data);
+            return data;
+        }
+
+        [HttpGet("history")]
+        public async Task<IEnumerable<LottoFieldDto>> GetHistory()
+        {
+            _logger.LogInformation("Retrieved get history request");
+
+            _logger.LogTrace("Creating mediator request");
+            var mediatorRequest = new GetHistoryQuery();
+            _logger.LogTrace("Created {name} request", nameof(GetLottoFieldQuery));
+
+            var data = await Mediator.Send(mediatorRequest);
+            _logger.LogInformation("History data is {@historyData}", data);
             return data;
         }
     }

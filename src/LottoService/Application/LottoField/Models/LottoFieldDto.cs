@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using LottoService.Domain.ValueObjects;
 
-namespace LottoService.Application.LottoField.Queries.GetLottoField
+namespace LottoService.Application.LottoField.Models
 {
     public class LottoFieldDto
     {

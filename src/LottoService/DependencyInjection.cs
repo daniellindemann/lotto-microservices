@@ -21,7 +21,6 @@ namespace LottoService
                 return s;
             });
 
-            services.AddSingleton<IRedisContext, RedisContext>();
             services.AddHttpClient<IRandomNumberService, RandomNumberService>();
             services.AddScoped<IRandomNumberService, RandomNumberService>();
 

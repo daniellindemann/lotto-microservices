@@ -7,21 +7,31 @@ namespace LottoService.Infrastructure.Persistence
 {
     public class RedisContext : IRedisContext
     {
+        private readonly ConnectionMultiplexer _connectionMultiplexer;
         private IDatabase _database;
+
+        private RedisContext()
+        {
+        }
+
+        public RedisContext(ConnectionMultiplexer connectionMultiplexer)
+        {
+            _connectionMultiplexer = connectionMultiplexer;
+        }
+
+        public static RedisContext Empty = new RedisContext();
 
         private bool Connect()
         {
             try
             {
+                // TODO: _connectionMultiplexer is not initialized correctly. Check if there's time
+                if (_connectionMultiplexer == null)
+                    return false;
+
                 if (_database == null)
                 {
-                    var connection = ConnectionMultiplexer.Connect(new ConfigurationOptions()
-                    {
-                        EndPoints = { "localhost" },
-                        ConnectTimeout = 250,
-                        ConnectRetry = 1
-                    });
-                    _database = connection.GetDatabase();
+                    _database = _connectionMultiplexer.GetDatabase();
                 }
 
                 return true;

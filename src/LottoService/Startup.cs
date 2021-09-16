@@ -1,5 +1,6 @@
 using System;
 using LottoService.Infrastructure;
+using LottoService.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using StackExchange.Redis;
 
 namespace LottoService
 {
@@ -31,6 +33,27 @@ namespace LottoService
 
             services.AddControllers();
 
+            ConnectionMultiplexer redisConnection = null;
+            try
+            {
+                redisConnection = ConnectionMultiplexer.Connect(new ConfigurationOptions()
+                {
+                    EndPoints = { "localhost" }, ConnectTimeout = 250, ConnectRetry = 1
+                });
+            }
+            catch (RedisConnectionException rcex)
+            {
+                // catch connection exception and do nothing
+            }
+
+            services.AddSingleton<IRedisContext, RedisContext>(c =>
+            {
+                if (redisConnection != null)
+                    return new RedisContext(redisConnection);
+
+                return RedisContext.Empty;
+            });
+
             services.AddLottoService(Configuration);
 
             services.AddOpenTelemetryTracing(builder =>
@@ -40,12 +63,18 @@ namespace LottoService
                     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(jaegerServiceName))
                     .AddSource(nameof(RandomNumberService))
                     .AddAspNetCoreInstrumentation()
-                    .AddHttpClientInstrumentation()
-                    .AddJaegerExporter(b =>
-                    {
-                        var jaegerHostname = Environment.GetEnvironmentVariable("Jaeger:HOSTNAME") ?? "localhost";
-                        b.AgentHost = jaegerHostname;
-                    });
+                    .AddHttpClientInstrumentation();
+
+                if (redisConnection != null)
+                {
+                    builder.AddRedisInstrumentation(redisConnection);
+                }
+
+                builder.AddJaegerExporter(b =>
+                {
+                    var jaegerHostname = Environment.GetEnvironmentVariable("Jaeger:HOSTNAME") ?? "localhost";
+                    b.AgentHost = jaegerHostname;
+                });
             });
 
             services.AddSwaggerGen(c =>

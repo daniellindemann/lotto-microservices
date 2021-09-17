@@ -30,9 +30,10 @@ namespace RandomNumberService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var seqUrl = Configuration.GetValue<string>("Seq:Url") ?? "http://localhost:5341";
             services.AddLogging(loggingBuilder =>
             {
-                loggingBuilder.AddSeq();
+                loggingBuilder.AddSeq(seqUrl);
             });
 
             services.AddControllers();
@@ -47,7 +48,8 @@ namespace RandomNumberService
                     .AddHttpClientInstrumentation()
                     .AddJaegerExporter(b =>
                     {
-                        var jaegerHostname = Environment.GetEnvironmentVariable("JAEGER_HOSTNAME") ?? "localhost";
+                        var jaegerHostname = Environment.GetEnvironmentVariable("Jaeger__HOSTNAME") ?? "localhost";
+                        Console.WriteLine($"Jaeger hostname: {jaegerHostname}");
                         b.AgentHost = jaegerHostname;
                     });
 

@@ -16,8 +16,11 @@ namespace LottoService
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly ILogger<Startup> _logger;
+
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
+            _logger = logger;
             Configuration = configuration;
         }
 
@@ -26,19 +29,21 @@ namespace LottoService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var seqUrl = Configuration.GetValue<string>("Seq:Url") ?? "http://localhost:5341";
             services.AddLogging(loggingBuilder =>
             {
-                loggingBuilder.AddSeq();
+                loggingBuilder.AddSeq(seqUrl);
             });
 
             services.AddControllers();
 
             ConnectionMultiplexer redisConnection = null;
+            var redisHost = Configuration.GetValue<string>("Redis:Host") ?? "localhost";
             try
             {
                 redisConnection = ConnectionMultiplexer.Connect(new ConfigurationOptions()
                 {
-                    EndPoints = { "localhost" }, ConnectTimeout = 250, ConnectRetry = 1
+                    EndPoints = { redisHost }, ConnectTimeout = 250, ConnectRetry = 1
                 });
             }
             catch (RedisConnectionException rcex)
@@ -73,6 +78,7 @@ namespace LottoService
                 builder.AddJaegerExporter(b =>
                 {
                     var jaegerHostname = Environment.GetEnvironmentVariable("Jaeger:HOSTNAME") ?? "localhost";
+                    _logger.LogInformation("Jaeger hostname: {jaeger_hostname}", jaegerHostname);
                     b.AgentHost = jaegerHostname;
                 });
             });

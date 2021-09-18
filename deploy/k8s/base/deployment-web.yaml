@@ -15,7 +15,7 @@ spec:
         app: web
     spec:
       containers:
-      - image: dlindemann/lottoweb:0.0.1
+      - image: dlindemann/lottoweb
         name: lottoweb
         ports:
         - containerPort: 5000

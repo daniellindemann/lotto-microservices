@@ -15,7 +15,7 @@ spec:
         app: lotto-service
     spec:
       containers:
-      - image: dlindemann/lottoservice:0.0.1
+      - image: dlindemann/lottoservice
         name: lottoservice
         ports:
         - containerPort: 5000

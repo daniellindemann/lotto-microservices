@@ -15,6 +15,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using RandomNumberService.Application;
 using RandomNumberService.Application.Common.Interfaces;
+using RandomNumberService.Config;
 
 namespace RandomNumberService
 {
@@ -30,7 +31,10 @@ namespace RandomNumberService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var seqUrl = Configuration.GetValue<string>("Seq:Url") ?? "http://localhost:5341";
+            var seqConfig = Configuration.GetSection("Seq").Bind<SeqConfig>();
+            var jaegerConfig = Configuration.GetSection("Jaeger").Bind<JaegerConfig>();
+
+            var seqUrl = seqConfig.Url ?? "http://localhost:5341";
             services.AddLogging(loggingBuilder =>
             {
                 loggingBuilder.AddSeq(seqUrl);
@@ -41,14 +45,15 @@ namespace RandomNumberService
 
             services.AddOpenTelemetryTracing(builder =>
             {
-                var serviceName = Configuration.GetValue<string>("Jaeger:ServiceName") ?? "RandomNumberService";
+                var serviceName = jaegerConfig.ServiceName ?? "RandomNumberService";
                 builder
                     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName))
                     .AddAspNetCoreInstrumentation()
                     .AddHttpClientInstrumentation()
                     .AddJaegerExporter(b =>
                     {
-                        var jaegerHostname = Environment.GetEnvironmentVariable("Jaeger__HOSTNAME") ?? "localhost";
+                        // var jaegerHostname = Environment.GetEnvironmentVariable("Jaeger__HOSTNAME") ?? "localhost";
+                        var jaegerHostname = jaegerConfig.HostName ?? "localhost";
                         Console.WriteLine($"Jaeger hostname: {jaegerHostname}");
                         b.AgentHost = jaegerHostname;
                     });

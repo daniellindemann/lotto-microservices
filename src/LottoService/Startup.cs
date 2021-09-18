@@ -1,4 +1,5 @@
 using System;
+using LottoService.Config;
 using LottoService.Infrastructure;
 using LottoService.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
@@ -16,11 +17,8 @@ namespace LottoService
 {
     public class Startup
     {
-        private readonly ILogger<Startup> _logger;
-
-        public Startup(IConfiguration configuration, ILogger<Startup> logger)
+        public Startup(IConfiguration configuration)
         {
-            _logger = logger;
             Configuration = configuration;
         }
 
@@ -29,7 +27,11 @@ namespace LottoService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var seqUrl = Configuration.GetValue<string>("Seq:Url") ?? "http://localhost:5341";
+            var seqConfig = Configuration.GetSection("Seq").Bind<SeqConfig>();
+            var jaegerConfig = Configuration.GetSection("Jaeger").Bind<JaegerConfig>();
+            var redisConfig = Configuration.GetSection("Redis").Bind<RedisConfig>();
+
+            var seqUrl = seqConfig.Url ?? "http://localhost:5341";
             services.AddLogging(loggingBuilder =>
             {
                 loggingBuilder.AddSeq(seqUrl);
@@ -38,7 +40,7 @@ namespace LottoService
             services.AddControllers();
 
             ConnectionMultiplexer redisConnection = null;
-            var redisHost = Configuration.GetValue<string>("Redis:Host") ?? "localhost";
+            var redisHost = redisConfig.HostName ?? "localhost";
             try
             {
                 redisConnection = ConnectionMultiplexer.Connect(new ConfigurationOptions()
@@ -63,7 +65,7 @@ namespace LottoService
 
             services.AddOpenTelemetryTracing(builder =>
             {
-                var jaegerServiceName = Configuration.GetValue<string>("Jaeger:ServiceName") ?? "LottoService";
+                var jaegerServiceName = jaegerConfig.ServiceName ?? "LottoService";
                 builder
                     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(jaegerServiceName))
                     .AddSource(nameof(RandomNumberService))
@@ -77,8 +79,8 @@ namespace LottoService
 
                 builder.AddJaegerExporter(b =>
                 {
-                    var jaegerHostname = Environment.GetEnvironmentVariable("Jaeger:HOSTNAME") ?? "localhost";
-                    _logger.LogInformation("Jaeger hostname: {jaeger_hostname}", jaegerHostname);
+                    var jaegerHostname = jaegerConfig.HostName ?? "localhost";
+                    Console.WriteLine($"Jaeger hostname: {jaegerHostname}");
                     b.AgentHost = jaegerHostname;
                 });
             });

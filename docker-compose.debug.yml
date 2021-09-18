@@ -31,9 +31,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5000
       - RandomNumberService__Url=http://randomnumberservice:5000
-      - Jaeger__HOSTNAME=jaeger
+      - Jaeger__HostName=jaeger
       - Seq__Url=http://seq:5341
-      - Redis__Host=redis
+      - Redis__HostName=redis
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
   randomnumberservice:
@@ -46,7 +46,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5000
-      - Jaeger__HOSTNAME=jaeger
+      - Jaeger__HostName=jaeger
       - Seq__Url=http://seq:5341
     volumes:
       - ~/.vsdbg:/remote_debugger:rw

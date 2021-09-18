@@ -12,14 +12,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using Web.Config;
 using Web.Data;
 
 namespace Web
 {
     public class Startup
     {
-        private ILogger<Startup> _logger;
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,7 +30,10 @@ namespace Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            var seqUrl = Configuration.GetValue<string>("Seq:Url") ?? "http://localhost:5341";
+            var seqConfig = Configuration.GetSection("Seq").Bind<SeqConfig>();
+            var jaegerConfig = Configuration.GetSection("Jaeger").Bind<JaegerConfig>();
+
+            var seqUrl = seqConfig.Url ?? "http://localhost:5341";
             services.AddLogging(loggingBuilder =>
             {
                 loggingBuilder.AddSeq(seqUrl);
@@ -46,15 +48,15 @@ namespace Web
 
             services.AddOpenTelemetryTracing(builder =>
             {
-                var jaegerServiceName = Configuration.GetValue<string>("Jaeger:ServiceName") ?? "Web";
+                var jaegerServiceName = jaegerConfig.ServiceName ?? "Web";
                 builder
                     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(jaegerServiceName))
                     .AddAspNetCoreInstrumentation()
                     .AddHttpClientInstrumentation()
                     .AddJaegerExporter(b =>
                     {
-                        var jaegerHostname = System.Environment.GetEnvironmentVariable("Jaeger:HOSTNAME") ?? "localhost";
-                        _logger.LogInformation("Jaeger hostname: {jaeger_hostname}", jaegerHostname);
+                        var jaegerHostname = jaegerConfig.HostName ?? "localhost";
+                        Console.WriteLine($"Jaeger hostname: {jaegerHostname}");
                         b.AgentHost = jaegerHostname;
                     });
             });
@@ -63,8 +65,6 @@ namespace Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
-            _logger = logger;
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

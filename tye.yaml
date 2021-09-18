@@ -54,7 +54,8 @@ services:
   - name: trace
     port: 5341
   - name: web
-    port: 80
+    port: 8181
+    containerPort: 80
   env:
   - name: "ACCEPT_EULA"
     value: "Y"

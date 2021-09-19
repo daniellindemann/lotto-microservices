@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+			"path": "./src/LottoService",
+			"name": "LottoService"
+		},
+		{
+			"path": "./src/RandomNumberService",
+			"name": "RandomNumberService"
+		},
+		{
+			"path": "./src/Web",
+			"name": "Web"
+		},
+		{
+			"path": "./tests/RandomNumberService.UnitTests",
+			"name": "UnitTests.RandonNumberService"
+		},
+		{
+			"path": "./deploy",
+			"name": "Deploy"
+		},
+		{
+			"path": ".",
+			"name": "Full"
+		}
+	],
+	"settings": {}
+}

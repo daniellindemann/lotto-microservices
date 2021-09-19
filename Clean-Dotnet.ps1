@@ -1,0 +1,1 @@
+get-childitem -Include bin,obj -Recurse -force

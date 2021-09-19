@@ -14,12 +14,10 @@ namespace LottoService.Controllers
     public class LottoNumberController : ApiControllerBase
     {
         private readonly ILogger<LottoNumberController> _logger;
-        private readonly IRedisContext _redisContext;
 
-        public LottoNumberController(ILogger<LottoNumberController> logger, IRedisContext redisContext)
+        public LottoNumberController(ILogger<LottoNumberController> logger)
         {
             _logger = logger;
-            _redisContext = redisContext;
         }
 
         [HttpGet]

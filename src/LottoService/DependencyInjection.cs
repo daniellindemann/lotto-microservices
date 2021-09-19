@@ -18,6 +18,9 @@ namespace LottoService
             {
                 var s = new RandomNumberServiceSettings();
                 configuration.GetSection("RandomNumberService").Bind(s);
+
+                s.Url = configuration.GetServiceUri("RandomNumberService")?.ToString() ?? s.Url;
+
                 return s;
             });
 

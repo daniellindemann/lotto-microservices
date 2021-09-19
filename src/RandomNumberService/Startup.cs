@@ -52,7 +52,6 @@ namespace RandomNumberService
                     .AddHttpClientInstrumentation()
                     .AddJaegerExporter(b =>
                     {
-                        // var jaegerHostname = Environment.GetEnvironmentVariable("Jaeger__HOSTNAME") ?? "localhost";
                         var jaegerHostname = jaegerConfig.HostName ?? "localhost";
                         Console.WriteLine($"Jaeger hostname: {jaegerHostname}");
                         b.AgentHost = jaegerHostname;

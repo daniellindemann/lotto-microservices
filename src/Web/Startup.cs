@@ -43,6 +43,15 @@ namespace Web
             services.AddServerSideBlazor();
             services.AddHttpClient<LottoService>();
 
+            services.AddSingleton<LottoServiceConfig>(_ =>
+            {
+                var apiUrl = Configuration.GetServiceUri("LottoService")?.ToString() ?? Configuration.GetValue<string>("Api");
+#if DEBUG
+                apiUrl ??= "http://localhost:5002";
+#endif
+                var lottoServiceConfig = new LottoServiceConfig() { Url = apiUrl };
+                return lottoServiceConfig;
+            });
             services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<LottoService>();
 

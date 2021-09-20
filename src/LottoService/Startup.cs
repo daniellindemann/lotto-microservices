@@ -105,7 +105,7 @@ namespace LottoService
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LottoService v1"));
 
             // do not use https - networking assumptions are not the job of the program
-            // app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseAuthorization();

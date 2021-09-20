@@ -1,8 +1,15 @@
-resources:
+bases:
 - ../../base
 
-# change images names, when acr changes!
+commonLabels:
+  environment: aks-demo
 
+patchesStrategicMerge:
+- deployment-lotto-service.yaml
+- deployment-random-number-service.yaml
+- deployment-web.yaml
+
+# change images names, when acr changes!
 images:
 - name: dlindemann/lottoservice
   newName: acr70731.azurecr.io/dlindemann/lottoservice

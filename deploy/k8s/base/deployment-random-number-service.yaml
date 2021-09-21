@@ -15,7 +15,7 @@ spec:
         app: random-number-service
     spec:
       containers:
-      - image: dlindemann/randomnumberservice:0.0.1
+      - image: dlindemann/randomnumberservice
         name: randomnumberservice
         ports:
         - containerPort: 5000

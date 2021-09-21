@@ -1,7 +1,14 @@
 #!/bin/sh
 
-registry='localhost:4999'
-version=0.0.1
+registry=${1:-localhost:4999}
+version=${2:-0.0.1}
+
+echo "Registry: $registry"
+echo "Version: $version"
+
+if [ -z "${string##*.azurecr.io*}" ]; then
+    az acr login -n $registry
+fi
 
 # build projects
 $(dirname "$0")/../../src/RandomNumberService/docker-build.sh

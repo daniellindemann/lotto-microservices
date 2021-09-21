@@ -39,60 +39,24 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "type": "docker-build",
-            "label": "docker-build: debug",
+            "label": "bridge-to-kubernetes.resource",
+            "type": "bridge-to-kubernetes.resource",
+            "resource": "random-number-service",
+            "resourceType": "service",
+            "ports": [
+                5001
+            ],
+            "targetCluster": "dli-aks-70731",
+            "targetNamespace": "lotto",
+            "useKubernetesServiceEnvironmentVariables": false
+        },
+        {
+            "label": "bridge-to-kubernetes.compound",
             "dependsOn": [
+                "bridge-to-kubernetes.resource",
                 "build"
             ],
-            "dockerBuild": {
-                "tag": "randomnumberservice:dev",
-                "target": "base",
-                "dockerfile": "${workspaceFolder}/Dockerfile",
-                "context": "${workspaceFolder}",
-                "pull": true
-            },
-            "netCore": {
-                "appProject": "${workspaceFolder}/RandomNumberService.csproj"
-            }
-        },
-        {
-            "type": "docker-build",
-            "label": "docker-build: release",
-            "dependsOn": [
-                "build"
-            ],
-            "dockerBuild": {
-                "tag": "randomnumberservice:latest",
-                "dockerfile": "${workspaceFolder}/Dockerfile",
-                "context": "${workspaceFolder}",
-                "pull": true
-            },
-            "netCore": {
-                "appProject": "${workspaceFolder}/RandomNumberService.csproj"
-            }
-        },
-        {
-            "type": "docker-run",
-            "label": "docker-run: debug",
-            "dependsOn": [
-                "docker-build: debug"
-            ],
-            "dockerRun": {},
-            "netCore": {
-                "appProject": "${workspaceFolder}/RandomNumberService.csproj",
-                "enableDebugging": true
-            }
-        },
-        {
-            "type": "docker-run",
-            "label": "docker-run: release",
-            "dependsOn": [
-                "docker-build: release"
-            ],
-            "dockerRun": {},
-            "netCore": {
-                "appProject": "${workspaceFolder}/RandomNumberService.csproj"
-            }
+            "dependsOrder": "sequence"
         }
     ]
 }

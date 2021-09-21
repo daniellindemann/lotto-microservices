@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -8,19 +9,18 @@ using LottoService.Application.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace LottoService.Infrastructure
-{using System.Net.Http.Json;
-
+{
     public class RandomNumberService : IRandomNumberService
     {
         private readonly RandomNumberServiceSettings _randomNumberServiceSettings;
         private readonly ILogger<RandomNumberService> _logger;
-        private readonly HttpClient _httpclient;
+        private readonly HttpClient _httpClient;
 
-        public RandomNumberService(IHttpClientFactory httpClientFactory, RandomNumberServiceSettings randomNumberServiceSettings, ILogger<RandomNumberService> logger)
+        public RandomNumberService(HttpClient httpClient, RandomNumberServiceSettings randomNumberServiceSettings, ILogger<RandomNumberService> logger)
         {
             _randomNumberServiceSettings = randomNumberServiceSettings;
             _logger = logger;
-            _httpclient = httpClientFactory.CreateClient();
+            _httpClient = httpClient;
         }
 
         public async Task<int> Generate(int min, int max)
@@ -38,9 +38,10 @@ namespace LottoService.Infrastructure
                 Content = new StringContent($"{{ \"min\": {min}, \"max\": {max} }}", Encoding.UTF8, "application/json")
             };
             _logger.LogTrace("Request {@request}", request);
+            Activity.Current?.SetTag("randomNumberService.Endpoint", request.RequestUri);
 
             _logger.LogTrace("Doing request");
-            var response = await _httpclient.SendAsync(request);
+            var response = await _httpClient.SendAsync(request);
             _logger.LogTrace("Response is {responseStatusCode}", response.StatusCode);
             if (!response.IsSuccessStatusCode)
                 throw new HttpRequestException();

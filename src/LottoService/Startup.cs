@@ -1,9 +1,17 @@
+using System;
+using LottoService.Config;
+using LottoService.Infrastructure;
+using LottoService.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+using StackExchange.Redis;
 
 namespace LottoService
 {
@@ -19,9 +27,64 @@ namespace LottoService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddLottoService(Configuration);
+            var seqConfig = Configuration.GetSection("Seq").Bind<SeqConfig>();
+            var jaegerConfig = Configuration.GetSection("Jaeger").Bind<JaegerConfig>();
+            var redisConfig = Configuration.GetSection("Redis").Bind<RedisConfig>();
+
+            var seqUrl = seqConfig.Url ?? "http://localhost:5341";
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.AddSeq(seqUrl);
+            });
 
             services.AddControllers();
+
+            ConnectionMultiplexer redisConnection = null;
+            var redisHost = redisConfig.HostName ?? "localhost";
+            try
+            {
+                redisConnection = ConnectionMultiplexer.Connect(new ConfigurationOptions()
+                {
+                    EndPoints = { redisHost }, ConnectTimeout = 250, ConnectRetry = 1
+                });
+            }
+            catch (RedisConnectionException rcex)
+            {
+                // catch connection exception and do nothing
+            }
+
+            services.AddSingleton<IRedisContext, RedisContext>(c =>
+            {
+                if (redisConnection != null)
+                    return new RedisContext(redisConnection);
+
+                return RedisContext.Empty;
+            });
+
+            services.AddLottoService(Configuration);
+
+            services.AddOpenTelemetryTracing(builder =>
+            {
+                var jaegerServiceName = jaegerConfig.ServiceName ?? "LottoService";
+                builder
+                    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(jaegerServiceName))
+                    .AddSource(nameof(RandomNumberService))
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation();
+
+                if (redisConnection != null)
+                {
+                    builder.AddRedisInstrumentation(redisConnection);
+                }
+
+                builder.AddJaegerExporter(b =>
+                {
+                    var jaegerHostname = jaegerConfig.HostName ?? "localhost";
+                    Console.WriteLine($"Jaeger hostname: {jaegerHostname}");
+                    b.AgentHost = jaegerHostname;
+                });
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LottoService", Version = "v1" });
@@ -42,7 +105,7 @@ namespace LottoService
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LottoService v1"));
 
             // do not use https - networking assumptions are not the job of the program
-            // app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseAuthorization();

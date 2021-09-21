@@ -3,6 +3,7 @@ using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using RandomNumberService.Application.Common.Exceptions;
+using RandomNumberService.Config;
 using Xunit;
 using RandomNumberService = RandomNumberService.Infrastructure.RandomNumberService;
 
@@ -17,8 +18,9 @@ namespace RandomNumberService.UnitTests
             var min = 4;
             var max = 200;
             var loggerMock = new Mock<ILogger<Infrastructure.RandomNumberService>>();
+            var appConfig = new AppConfig() { ThrowOnModulo = 0 };
 
-            var sut = new Infrastructure.RandomNumberService(loggerMock.Object);
+            var sut = new Infrastructure.RandomNumberService(loggerMock.Object, appConfig);
 
             // act
             var number = sut.Generate(min, max);
@@ -33,7 +35,8 @@ namespace RandomNumberService.UnitTests
         {
             var minAndMax = 1;
             var loggerMock = new Mock<ILogger<Infrastructure.RandomNumberService>>();
-            var sut = new Infrastructure.RandomNumberService(loggerMock.Object);
+            var appConfig = new AppConfig() { ThrowOnModulo = 0 };
+            var sut = new Infrastructure.RandomNumberService(loggerMock.Object, appConfig);
 
             // act
             // assert
@@ -52,7 +55,8 @@ namespace RandomNumberService.UnitTests
             var min = 12;
             var max = 3;
             var loggerMock = new Mock<ILogger<Infrastructure.RandomNumberService>>();
-            var sut = new Infrastructure.RandomNumberService(loggerMock.Object);
+            var appConfig = new AppConfig() { ThrowOnModulo = 0 };
+            var sut = new Infrastructure.RandomNumberService(loggerMock.Object, appConfig);
 
             // act
             // assert

@@ -12,6 +12,7 @@ registry: localhost:4999
 services:
 - name: RandomNumberService
   project: src/RandomNumberService/RandomNumberService.csproj
+  replicas: 2
   bindings:
   - name: http
     port: 5000
@@ -21,9 +22,10 @@ services:
     protocol: https
 - name: LottoService
   project: src/LottoService/LottoService.csproj
+  replicas: 2
   env:
   - name: RandomNumberService__Url
-    value: http://localhost:5000/
+    value: http://randomnumberservice:5000/
   bindings:
   - name: http
     port: 5002
@@ -35,7 +37,7 @@ services:
   project: src/Web/Web.csproj
   env:
   - name: Api
-    value: http://localhost:5002
+    value: http://lottoservice:5002
   bindings:
   - name: http
     port: 5004

@@ -4,16 +4,19 @@ using Microsoft.Extensions.Logging;
 using RandomNumberService.Application;
 using RandomNumberService.Application.Common.Exceptions;
 using RandomNumberService.Application.Common.Interfaces;
+using RandomNumberService.Config;
 
 namespace RandomNumberService.Infrastructure
 {
     public class RandomNumberService : IRandomNumberService
     {
         private readonly ILogger<RandomNumberService> _logger;
+        private readonly AppConfig _appConfig;
 
-        public RandomNumberService(ILogger<RandomNumberService> logger)
+        public RandomNumberService(ILogger<RandomNumberService> logger, AppConfig appConfig)
         {
             _logger = logger;
+            _appConfig = appConfig;
         }
 
         public int Generate(int min, int max)
@@ -34,6 +37,12 @@ namespace RandomNumberService.Infrastructure
             var rng = new Random();
             var number = rng.Next(min, max);
             _logger.LogInformation("Generated number {number}", number);
+
+            if(_appConfig.ThrowOnModulo > 0 &&
+                number % _appConfig.ThrowOnModulo == 0)
+            {
+                throw new ModuloZeroException(number);
+            }
 
             return number;
         }

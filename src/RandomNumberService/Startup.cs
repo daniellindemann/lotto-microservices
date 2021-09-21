@@ -34,6 +34,16 @@ namespace RandomNumberService
             var seqConfig = Configuration.GetSection("Seq").Bind<SeqConfig>();
             var jaegerConfig = Configuration.GetSection("Jaeger").Bind<JaegerConfig>();
 
+            services.AddSingleton<AppConfig>(_ =>
+            {
+                var appConfig = new AppConfig()
+                {
+                    ThrowOnModulo = Configuration.GetValue<int>("ThrowOnModulo")
+                };
+
+                return appConfig;
+            });
+
             var seqUrl = seqConfig.Url ?? "http://localhost:5341";
             services.AddLogging(loggingBuilder =>
             {

@@ -48,7 +48,7 @@ namespace LottoService
                     EndPoints = { redisHost }, ConnectTimeout = 250, ConnectRetry = 1
                 });
             }
-            catch (RedisConnectionException rcex)
+            catch (RedisConnectionException)
             {
                 // catch connection exception and do nothing
             }
@@ -60,6 +60,18 @@ namespace LottoService
 
                 return RedisContext.Empty;
             });
+
+            var instrumentationKey = Environment.GetEnvironmentVariable("APPINSIGHTS_INSTRUMENTATIONKEY") ?? Configuration.GetValue<string>("APPINSIGHTS_INSTRUMENTATIONKEY");
+            if(!string.IsNullOrEmpty(instrumentationKey))
+            {
+                services.AddApplicationInsightsTelemetry(instrumentationKey);
+                services.AddApplicationInsightsKubernetesEnricher();
+                Console.WriteLine("Setup instrumentation for application insights");
+            }
+            else
+            {
+                Console.WriteLine("Application insights instrumentation not configured");
+            }
 
             services.AddLottoService(Configuration);
 

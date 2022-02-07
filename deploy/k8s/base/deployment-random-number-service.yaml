@@ -16,6 +16,7 @@ spec:
     spec:
       containers:
       - image: dlindemann/randomnumberservice
+        imagePullPolicy: Always
         name: randomnumberservice
         ports:
         - containerPort: 5000

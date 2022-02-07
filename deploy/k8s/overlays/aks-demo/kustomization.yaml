@@ -1,6 +1,11 @@
 bases:
 - ../../base
 
+namespace: lotto
+
+resources:
+- configmap-appinsights.yaml
+
 commonLabels:
   environment: aks-demo
 
@@ -12,11 +17,11 @@ patchesStrategicMerge:
 # change images names, when acr changes!
 images:
 - name: dlindemann/lottoservice
-  newName: acr70731.azurecr.io/dlindemann/lottoservice
+  newName: acr58921.azurecr.io/dlindemann/lottoservice
   newTag: 0.0.1
 - name: dlindemann/randomnumberservice
-  newName: acr70731.azurecr.io/dlindemann/randomnumberservice
+  newName: acr58921.azurecr.io/dlindemann/randomnumberservice
   newTag: 0.0.1
 - name: dlindemann/lottoweb
-  newName: acr70731.azurecr.io/dlindemann/lottoweb
+  newName: acr58921.azurecr.io/dlindemann/lottoweb
   newTag: 0.0.1

@@ -6,3 +6,13 @@ metadata:
   name: web
 spec:
   replicas: 2
+  template:
+    spec:
+      containers:
+      - name: lottoweb
+        env:
+        - name: APPINSIGHTS_INSTRUMENTATIONKEY
+          valueFrom:
+            configMapKeyRef:
+              key: instrumentation_key
+              name: appinsights

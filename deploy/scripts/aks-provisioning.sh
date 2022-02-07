@@ -5,6 +5,7 @@ VNET_ADDRESS_PREFIX="${2:-10.100.0.0/16}"
 VNET_ADRESS_SUBNET_PREFIX="${3:-10.100.240.0/24}"
 AKS_SERVICE_CIDR="${4:-10.101.0.0/24}"
 AKS_DNS_SERVICE_IP="${5:-10.101.0.10}"
+ACR_SKU="${6:-Standard}"
 
 # local variables
 AKS_RANDOM=$(shuf -i 1-100000 -n 1)
@@ -42,12 +43,14 @@ VERSION=$(az aks get-versions \
 az aks create \
     --resource-group $RESOURCE_GROUP \
     --name $AKS_CLUSTER_NAME \
+    --tags 'Business Hours Start=08:00' 'Business Hours End=18:00' \
     --vm-set-type VirtualMachineScaleSets \
     --node-count 2 \
     --load-balancer-sku standard \
     --location $REGION_NAME \
     --kubernetes-version $VERSION \
     --network-plugin azure \
+    --network-policy calico \
     --vnet-subnet-id $SUBNET_ID \
     --service-cidr $AKS_SERVICE_CIDR \
     --dns-service-ip $AKS_DNS_SERVICE_IP \
@@ -59,7 +62,7 @@ az acr create \
     --resource-group $RESOURCE_GROUP \
     --location $REGION_NAME \
     --name $ACR_NAME \
-    --sku Standard
+    --sku $ACR_SKU
 
 # connect acr to aks
 az aks update \

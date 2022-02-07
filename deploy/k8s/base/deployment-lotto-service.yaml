@@ -16,6 +16,7 @@ spec:
     spec:
       containers:
       - image: dlindemann/lottoservice
+        imagePullPolicy: Always
         name: lottoservice
         ports:
         - containerPort: 5000

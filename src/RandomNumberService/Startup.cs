@@ -50,6 +50,18 @@ namespace RandomNumberService
                 loggingBuilder.AddSeq(seqUrl);
             });
 
+            var instrumentationKey = Environment.GetEnvironmentVariable("APPINSIGHTS_INSTRUMENTATIONKEY") ?? Configuration.GetValue<string>("APPINSIGHTS_INSTRUMENTATIONKEY");
+            if(!string.IsNullOrEmpty(instrumentationKey))
+            {
+                services.AddApplicationInsightsTelemetry(instrumentationKey);
+                services.AddApplicationInsightsKubernetesEnricher();
+                Console.WriteLine("Setup instrumentation for application insights");
+            }
+            else
+            {
+                Console.WriteLine("Application insights instrumentation not configured");
+            }
+
             services.AddControllers();
             services.AddSingleton<IRandomNumberService, Infrastructure.RandomNumberService>();
 

@@ -36,7 +36,7 @@ namespace LottoService.Infrastructure.Persistence
 
                 return true;
             }
-            catch (RedisConnectionException rcex)
+            catch (RedisConnectionException)
             {
                 return false;
             }

@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: appinsights
 data:
-  instrumentation_key: CHANGE_TO_CUSTOM_KEY
+  instrumentation_key: 46a582ff-0960-41bc-8ad4-9ff59b2db91a

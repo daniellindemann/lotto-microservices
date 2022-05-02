@@ -5,7 +5,7 @@ metadata:
     app: web
   name: web
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: web
@@ -15,7 +15,7 @@ spec:
         app: web
     spec:
       containers:
-      - image: dlindemann/lottoweb
+      - image: crdlidemoaks4004.azurecr.io/dlindemann/lottoweb:1.0.0
         imagePullPolicy: Always
         name: lottoweb
         ports:

@@ -5,7 +5,7 @@ metadata:
     app: lotto-service
   name: lotto-service
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: lotto-service
@@ -15,7 +15,7 @@ spec:
         app: lotto-service
     spec:
       containers:
-      - image: dlindemann/lottoservice
+      - image: crdlidemoaks4004.azurecr.io/dlindemann/lottoservice:1.0.0
         imagePullPolicy: Always
         name: lottoservice
         ports:

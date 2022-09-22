@@ -1,8 +1,0 @@
-﻿<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Full" type="CompoundRunConfigurationType">
-    <toRun name="LottoService" type="LaunchSettings" />
-    <toRun name="Web" type="LaunchSettings" />
-    <toRun name="RandomNumberService" type="LaunchSettings" />
-    <method v="2" />
-  </configuration>
-</component>

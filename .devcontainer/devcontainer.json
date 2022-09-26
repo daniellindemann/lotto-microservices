@@ -9,7 +9,8 @@
 			// Append -bullseye or -focal to pin to an OS version.
 			"VARIANT": "6.0-bullseye",
 			// Options
-			"NODE_VERSION": "18"
+			"NODE_VERSION": "16",
+			"ANGULAR_VERSION": "13.3.4"
 		}
 	},
 

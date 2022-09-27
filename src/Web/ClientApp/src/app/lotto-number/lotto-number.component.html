@@ -5,18 +5,27 @@
 <div class="numbers-container">
   <div class="head">Numbers</div>
   <div class="numbers">
-    <div *ngFor='let number of lottoField.numbers'>{{number}}</div>
+    <div *ngFor="let number of lottoField.numbers">{{number | leadingZero}}</div>
   </div>
   <div class="head">Super Number</div>
   <div class="numbers">
-    <div>{{lottoField.superNumber}}</div>
+    <div>{{lottoField.superNumber | leadingZero}}</div>
   </div>
 </div>
 
-<div class="actions">
+<div class="actions-container">
   <button class="btn btn-primary" (click)="reload()">Reload</button>
 </div>
 
 <div class="cache-container">
-  TODO: Cache
+  <div class="head">History</div>
+  <div class="numbers" *ngIf="lottoFieldHistory.length > 0">
+    <div *ngFor="let lottoField of lottoFieldHistory">
+      <span *ngFor="let number of lottoField.numbers">{{number | leadingZero}}&nbsp;&nbsp;</span>
+      <span>&dash;&nbsp;&nbsp;{{lottoField.superNumber | leadingZero}}</span>
+    </div>
+  </div>
+  <div class="numbers" *ngIf="lottoFieldHistory.length == 0">
+    <div>No history available</div>
+  </div>
 </div>

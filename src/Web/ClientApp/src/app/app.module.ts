@@ -12,13 +12,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LottoNumberComponent } from './lotto-number/lotto-number.component';
 import { Observable } from 'rxjs';
 import { AppConfigService } from './services/app-config.service';
-
-// function initializeAppFactory(httpClient: HttpClient, @Inject('BASE_URL') baseUrl: string): () => Observable<any> {
-//   return () => httpClient.get<AppConfig>(baseUrl + 'api/weatherforecast')
-//     .pipe(
-//       tap
-//     )
-// }
+import { LeadingZeroPipe } from './pipes/leading-zero.pipe';
 
 @NgModule({
   declarations: [
@@ -27,7 +21,8 @@ import { AppConfigService } from './services/app-config.service';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    LottoNumberComponent
+    LottoNumberComponent,
+    LeadingZeroPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

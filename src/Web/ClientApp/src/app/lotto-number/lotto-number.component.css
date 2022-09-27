@@ -1,4 +1,6 @@
-.numbers-container {
+.numbers-container,
+.actions-container,
+.cache-container {
   padding: 24px 0
 }
 
@@ -17,4 +19,13 @@
   font-weight: bold;
   margin: 8px;
   padding: 8px;
+}
+
+.actions-container > .btn {
+  display: block;
+  margin: 0 auto;
+}
+
+.cache-container .numbers {
+  padding: 8px 0;
 }

@@ -23,7 +23,15 @@
 				"ms-dotnettools.csharp",
 				"angular.ng-template",
 				"fernandoescolar.vscode-solution-explorer"
-			]
+			],
+            "settings": {
+                "[csharp]": {
+                    "editor.formatOnSave": true
+                },
+                "[typescript]": {
+                    "editor.formatOnSave": true
+                }
+            }
 		}
 	},
 

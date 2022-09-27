@@ -5,16 +5,11 @@
 <div class="numbers-container">
   <div class="head">Numbers</div>
   <div class="numbers">
-    <div>48</div>
-    <div>3</div>
-    <div>17</div>
-    <div>8</div>
-    <div>18</div>
-    <div>29</div>
+    <div *ngFor='let number of lottoField.numbers'>{{number}}</div>
   </div>
   <div class="head">Super Number</div>
   <div class="numbers">
-    <div>5</div>
+    <div>{{lottoField.superNumber}}</div>
   </div>
 </div>
 

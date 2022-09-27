@@ -27,6 +27,56 @@
             }
         },
         {
+            // Use IntelliSense to find out which attributes exist for C# debugging
+            // Use hover for the description of the existing attributes
+            // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+            "name": "LottoService",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-LottoService",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/LottoService/bin/Debug/net6.0/LottoService.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/LottoService",
+            "stopAtEntry": false,
+            // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            // Use IntelliSense to find out which attributes exist for C# debugging
+            // Use hover for the description of the existing attributes
+            // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+            "name": "RandomNumberService",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-RandomNumberService",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/RandomNumberService/bin/Debug/net6.0/RandomNumberService.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/RandomNumberService",
+            "stopAtEntry": false,
+            // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach"

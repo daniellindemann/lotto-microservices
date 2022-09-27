@@ -1,7 +1,9 @@
 using System;
+
 using LottoService.Config;
 using LottoService.Infrastructure;
 using LottoService.Infrastructure.Persistence;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,8 +11,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+
 using StackExchange.Redis;
 
 namespace LottoService
@@ -45,7 +49,9 @@ namespace LottoService
             {
                 redisConnection = ConnectionMultiplexer.Connect(new ConfigurationOptions()
                 {
-                    EndPoints = { redisHost }, ConnectTimeout = 250, ConnectRetry = 1
+                    EndPoints = { redisHost },
+                    ConnectTimeout = 250,
+                    ConnectRetry = 1
                 });
             }
             catch (RedisConnectionException)
@@ -62,7 +68,7 @@ namespace LottoService
             });
 
             var instrumentationKey = Environment.GetEnvironmentVariable("APPINSIGHTS_INSTRUMENTATIONKEY") ?? Configuration.GetValue<string>("APPINSIGHTS_INSTRUMENTATIONKEY");
-            if(!string.IsNullOrEmpty(instrumentationKey))
+            if (!string.IsNullOrEmpty(instrumentationKey))
             {
                 services.AddApplicationInsightsTelemetry(instrumentationKey);
                 services.AddApplicationInsightsKubernetesEnricher();
@@ -102,6 +108,16 @@ namespace LottoService
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LottoService", Version = "v1" });
             });
             services.AddHealthChecks();
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowAnyOrigin();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -120,6 +136,7 @@ namespace LottoService
             //app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors();
             app.UseAuthorization();
 
             // add health checks

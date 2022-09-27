@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,8 +12,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+
 using RandomNumberService.Application;
 using RandomNumberService.Application.Common.Interfaces;
 using RandomNumberService.Config;
@@ -51,7 +54,7 @@ namespace RandomNumberService
             });
 
             var instrumentationKey = Environment.GetEnvironmentVariable("APPINSIGHTS_INSTRUMENTATIONKEY") ?? Configuration.GetValue<string>("APPINSIGHTS_INSTRUMENTATIONKEY");
-            if(!string.IsNullOrEmpty(instrumentationKey))
+            if (!string.IsNullOrEmpty(instrumentationKey))
             {
                 services.AddApplicationInsightsTelemetry(instrumentationKey);
                 services.AddApplicationInsightsKubernetesEnricher();
@@ -86,6 +89,16 @@ namespace RandomNumberService
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RandomNumberService", Version = "v1" });
             });
             services.AddHealthChecks();
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowAnyOrigin();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -104,6 +117,9 @@ namespace RandomNumberService
             // app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
+
             app.UseAuthorization();
 
             // add health checks

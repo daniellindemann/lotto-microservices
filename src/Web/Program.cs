@@ -1,6 +1,9 @@
+using Web.Config;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.Configure<LottoServiceConfig>(builder.Configuration.GetSection("LottoService"));
 
 builder.Services.AddControllersWithViews();
 

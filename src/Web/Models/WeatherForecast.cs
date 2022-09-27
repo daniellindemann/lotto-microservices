@@ -1,4 +1,4 @@
-namespace Web;
+namespace Web.Models;
 
 public class WeatherForecast
 {

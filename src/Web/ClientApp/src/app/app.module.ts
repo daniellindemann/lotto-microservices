@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, Inject, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -10,6 +10,15 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LottoNumberComponent } from './lotto-number/lotto-number.component';
+import { Observable } from 'rxjs';
+import { AppConfigService } from './services/app-config.service';
+
+// function initializeAppFactory(httpClient: HttpClient, @Inject('BASE_URL') baseUrl: string): () => Observable<any> {
+//   return () => httpClient.get<AppConfig>(baseUrl + 'api/weatherforecast')
+//     .pipe(
+//       tap
+//     )
+// }
 
 @NgModule({
   declarations: [
@@ -31,7 +40,14 @@ import { LottoNumberComponent } from './lotto-number/lotto-number.component';
       { path: 'lotto-number', component: LottoNumberComponent }
     ])
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      deps: [AppConfigService],
+      useFactory: (appConfigService: AppConfigService) => () => appConfigService.loadAppConfig()
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

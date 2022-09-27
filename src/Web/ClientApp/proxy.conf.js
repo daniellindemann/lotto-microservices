@@ -7,7 +7,7 @@ const PROXY_CONFIG = [
   {
     context: [
       "/api",
-   ],
+    ],
     target: target,
     secure: false,
     headers: {

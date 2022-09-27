@@ -14,7 +14,6 @@ export class LottoNumberService {
   }
 
   public getLottoNumber() {
-    debugger;
     const url = this.appConfigService.lottoService.url + '/api/lottonumber';
     return this.httpClient.get<LottoField>(url)
       .pipe(
@@ -32,7 +31,6 @@ export class LottoNumberService {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
-      debugger;
       console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption

@@ -26,7 +26,6 @@ export class LottoNumberComponent implements OnInit {
   private loadNumbers() {
     this.lottoNumberService.getLottoNumber()
       .subscribe(lottoField => {
-        debugger;
         this.lottoField = lottoField;
       });
   }

@@ -9,7 +9,8 @@ import { LottoNumberService } from '../services/lotto-number.service';
   styleUrls: ['lotto-number.component.css']
 })
 export class LottoNumberComponent implements OnInit {
-  lottoField: LottoField = {} as LottoField;
+
+  lottoField?: LottoField;
   lottoFieldHistory: LottoField[] = [];
 
   constructor(private lottoNumberService: LottoNumberService) {
@@ -21,7 +22,9 @@ export class LottoNumberComponent implements OnInit {
 
   reload() {
     // var lottoServiceUrl = this.appConfigService.appConfig.LottoService.url;
-    this.lottoFieldHistory.unshift(this.lottoField);
+    if (this.lottoFieldHistory != null) {
+      this.lottoFieldHistory.unshift(this.lottoField || {} as LottoField);
+    }
     this.loadNumbers();
   }
 

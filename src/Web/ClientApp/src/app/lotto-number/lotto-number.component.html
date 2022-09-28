@@ -5,11 +5,13 @@
 <div class="numbers-container">
   <div class="head">Numbers</div>
   <div class="numbers">
-    <div *ngFor="let number of lottoField.numbers">{{number | leadingZero}}</div>
+    <div *ngIf="!lottoField">&nbsp;</div>
+    <div *ngFor="let number of lottoField?.numbers">{{number | leadingZero}}</div>
   </div>
   <div class="head">Super Number</div>
   <div class="numbers">
-    <div>{{lottoField.superNumber | leadingZero}}</div>
+    <div *ngIf="!lottoField">&nbsp;</div>
+    <div>{{lottoField?.superNumber || 0 | leadingZero}}</div>
   </div>
 </div>
 

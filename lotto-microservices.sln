@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{32BBE05A-C146-4C6E-AC3B-5F1F2A663393}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D9AFB98E-7EA6-4C1D-BFC2-10255342EAC1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "src\Web\Web.csproj", "{B61C813D-6209-4164-9191-0E82965B7A4A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomNumberService", "src\RandomNumberService\RandomNumberService.csproj", "{A24CA6C2-B5AD-4424-8FE5-A53E28C5C1C5}"

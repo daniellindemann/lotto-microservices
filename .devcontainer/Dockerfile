@@ -12,6 +12,9 @@ RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/
 ARG ANGULAR_VERSION="none"
 RUN if [ "${ANGULAR_VERSION}" != null ]; then su vscode -c "npm install -g @angular/cli@${ANGULAR_VERSION} 2>&1"; fi
 
+ARG TYE_VERSION="none"
+RUN if [ "${TYE_VERSION}" != null ]; then su vscode -c "dotnet tool install -g Microsoft.Tye --version \"${TYE_VERSION}\""; fi
+
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 #     && apt-get -y install --no-install-recommends <your-package-list-here>

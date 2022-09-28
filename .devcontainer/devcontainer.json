@@ -10,7 +10,8 @@
 			"VARIANT": "6.0-bullseye",
 			// Options
 			"NODE_VERSION": "16",
-			"ANGULAR_VERSION": "13.3.4"
+			"ANGULAR_VERSION": "13.3.4",
+            "TYE_VERSION": "0.11.0-alpha.22111.1"
 		}
 	},
 

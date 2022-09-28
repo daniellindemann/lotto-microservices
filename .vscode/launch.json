@@ -81,5 +81,21 @@
             "type": "coreclr",
             "request": "attach"
         }
+    ],
+    "compounds": [
+        {
+            "name": "All projects (RandomNumberService + LottoService + Web)",
+            "configurations": [
+                "RandomNumberService",
+                "LottoService",
+                "Web"
+            ],
+            "stopAll": true,
+            "presentation": {
+                "hidden": false,
+                "group": "Main",
+                "order": 1
+            }
+        }
     ]
 }

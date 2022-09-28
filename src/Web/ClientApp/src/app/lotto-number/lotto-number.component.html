@@ -2,6 +2,12 @@
 
 <p>This can be your winning numbers</p>
 
+<ng-container *ngIf="lottoField && !lottoField?.superNumber">
+  <div class="alert alert-danger" role="alert">
+    Unable to load lotto number
+  </div>
+</ng-container>
+
 <div class="numbers-container">
   <div class="head">Numbers</div>
   <div class="numbers">

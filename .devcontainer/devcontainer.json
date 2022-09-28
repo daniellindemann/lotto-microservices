@@ -23,6 +23,7 @@
 			"extensions": [
 				"ms-dotnettools.csharp",
 				"angular.ng-template",
+                "ms-azuretools.vscode-tye",
 				"fernandoescolar.vscode-solution-explorer"
 			],
             "settings": {

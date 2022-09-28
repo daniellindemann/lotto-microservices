@@ -1,30 +1,45 @@
+# tye application configuration file
+# read all about it at https://github.com/dotnet/tye
+#
+# when you've given us a try, we'd love to know what you think:
+#    https://aka.ms/AA7q20u
+#
+name: lotto-microservices
 services:
-  randomnumberservice:
-    image: dlindemann/randomnumberservice:0.0.1
-    build:
-      context: ./src/RandomNumberService
-      dockerfile: ./Dockerfile
-    ports:
-      - "8081:5000"
-    environment:
-      - ASPNETCORE_URLS=http://+:5000
-  lottoservice:
-    image: dlindemann/lottoservice:0.0.1
-    build:
-      context: ./src/LottoService
-      dockerfile: ./Dockerfile
-    ports:
-      - "8082:5000"
-    environment:
-      - ASPNETCORE_URLS=http://+:5000
-      - RandomNumberService__Url=http://randomnumberservice:5000
-  web:
-    image: dlindemann/lottoweb:0.0.1
-    build:
-      context: ./src/Web
-      dockerfile: ./Dockerfile
-    ports:
-      - "8083:5000"
-    environment:
-      - ASPNETCORE_URLS=http://+:5000
-      - LottoService__Url=http://localhost:8082 # this get called by the spa client
+- name: randomnumberservice
+  image: dlindemann/randomnumberservice:0.0.1
+  dockerFile: ./Dockerfile
+  project: /workspaces/lotto-microservices/src/RandomNumberService/RandomNumberService.csproj
+  bindings:
+  - port: 8081
+    containerPort: 5000
+    protocol: http
+  env:
+  - name: ASPNETCORE_URLS
+    value: http://+:5000
+- name: lottoservice
+  image: dlindemann/lottoservice:0.0.1
+  dockerFile: ./Dockerfile
+  project: /workspaces/lotto-microservices/src/LottoService/LottoService.csproj
+  bindings:
+  - port: 8082
+    containerPort: 5000
+    protocol: http
+  env:
+  - name: ASPNETCORE_URLS
+    value: http://+:5000
+  - name: RandomNumberService__Url
+    value: http://randomnumberservice:5000
+- name: web
+  image: dlindemann/lottoweb:0.0.1
+  dockerFile: ./Dockerfile
+  project: /workspaces/lotto-microservices/src/Web/Web.csproj
+  bindings:
+  - port: 8083
+    containerPort: 5000
+    protocol: http
+  env:
+  - name: ASPNETCORE_URLS
+    value: http://+:5000
+  - name: LottoService__Url
+    value: http://localhost:8082

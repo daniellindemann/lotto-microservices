@@ -1,9 +1,6 @@
-using System;
+namespace RandomNumberService.Config;
 
-namespace RandomNumberService.Config
+public class AppConfig
 {
-    public class AppConfig
-    {
-        public int ThrowOnModulo { get; set; }
-    }
+    public uint ThrowOnModulo { get; set; }
 }

@@ -108,6 +108,11 @@
                 "${workspaceFolder}/src/RandomNumberService/RandomNumberService.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "tye-run",
+            "type": "tye-run",
+            "watch": true
         }
     ]
 }

@@ -89,6 +89,14 @@
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach"
+        },
+        {
+            "applicationName": "lotto-microservices",
+            "name": "Debug with Tye",
+            "preLaunchTask": "tye-run",
+            "request": "launch",
+            "type": "tye",
+            "watch": true
         }
     ],
     "compounds": [

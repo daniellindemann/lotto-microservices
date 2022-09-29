@@ -24,7 +24,11 @@
 				"ms-dotnettools.csharp",
 				"angular.ng-template",
                 "ms-azuretools.vscode-tye",
-				"fernandoescolar.vscode-solution-explorer"
+                "ms-azuretools.vscode-docker",
+                "ms-kubernetes-tools.vscode-kubernetes-tools",
+                "ms-kubernetes-tools.vscode-aks-tools",
+                "redhat.vscode-yaml",
+                "mindaro.mindaro"
 			],
             "settings": {
                 "[csharp]": {
@@ -73,6 +77,7 @@
 		// set environment variables from host
 		"ASPNETCORE_Kestrel__Certificates__Default__Path": "/home/vscode/.aspnet/https/aspnetapp.pfx",
 		"ASPNETCORE_Kestrel__Certificates__Default__Password": "${localEnv:ASPNETCORE_Kestrel__Certificates__Default__Password}"
+        //"ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
 	},
 
 	// Use 'postCreateCommand' to run commands after the container is created.

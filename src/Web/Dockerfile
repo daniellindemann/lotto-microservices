@@ -10,10 +10,7 @@ RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /
 USER appuser
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
-# TODO how to argument
-# RUN curl -O https://nodejs.org/download/release/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz \
-#     && tar xzf node-v${NODE_VERSION}-linux-x64.tar.gz \
-#     && ENV PATH="/node-v${NODE_VERSION}-linux-x64/bin:${PATH}"
+# TODO: how to argument
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get install -y nodejs
 WORKDIR /src

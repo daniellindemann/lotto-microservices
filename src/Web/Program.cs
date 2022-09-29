@@ -4,6 +4,14 @@ using Web.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var dict = Environment.GetEnvironmentVariables().Cast<System.Collections.DictionaryEntry>()
+     .ToDictionary(kvp => (string)kvp.Key, kvp => (string)kvp.Value).OrderBy(kvp => kvp.Key);
+foreach (var kvp in dict)
+{
+    Console.WriteLine($"{kvp.Key} = {kvp.Value}");
+}
+
+
 // Add services to the container.
 builder.Services.AddOptions<LottoServiceConfig>()
     .Bind(builder.Configuration.GetSection("LottoService"))

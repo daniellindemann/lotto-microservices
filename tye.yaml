@@ -8,6 +8,13 @@ name: lotto-microservices
 services:
 - name: web
   project: src/Web/Web.csproj
+  env:
+    - name: Logging__LogLevel__Default
+      value: Trace
+    - name: ASPNETCORE_HOSTINGSTARTUPASSEMBLIES
+      value: Microsoft.AspNetCore.SpaProxy
+# - name: web-angular
+#   executable: npm run start --prefix src/Web/ClientApp
 - name: randomnumberservice
   project: src/RandomNumberService/RandomNumberService.csproj
 - name: lottoservice

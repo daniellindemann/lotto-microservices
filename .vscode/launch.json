@@ -27,6 +27,11 @@
             },
             "logging": {
                 "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "01-plain",
+                "order": 3
             }
         },
         {
@@ -55,6 +60,11 @@
             },
             "logging": {
                 "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "01-plain",
+                "order": 2
             }
         },
         {
@@ -83,12 +93,12 @@
             },
             "logging": {
                 "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "01-plain",
+                "order": 1
             }
-        },
-        {
-            "name": ".NET Core Attach",
-            "type": "coreclr",
-            "request": "attach"
         },
         {
             "applicationName": "lotto-microservices",
@@ -96,7 +106,22 @@
             "preLaunchTask": "tye-run",
             "request": "launch",
             "type": "tye",
-            "watch": true
+            "watch": true,
+            "presentation": {
+                "hidden": false,
+                "group": "03-tye",
+                "order": 1
+            }
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "presentation": {
+                "hidden": false,
+                "group": "50-attach",
+                "order": 1
+            }
         }
     ],
     "compounds": [
@@ -110,7 +135,7 @@
             "stopAll": true,
             "presentation": {
                 "hidden": false,
-                "group": "Main",
+                "group": "02-all",
                 "order": 1
             }
         }

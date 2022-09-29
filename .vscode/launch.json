@@ -101,7 +101,7 @@
             }
         },
         {
-            "applicationName": "lotto-microservices",
+            "applicationName": "tye-lotto-microservices",
             "name": "Debug with Tye",
             "preLaunchTask": "tye-run",
             "request": "launch",
@@ -111,6 +111,19 @@
                 "hidden": false,
                 "group": "03-tye",
                 "order": 1
+            }
+        },
+        {
+            "applicationName": "tye-lotto-microservices-docker",
+            "name": "Debug with Tye (Docker)",
+            "preLaunchTask": "tye-run-docker",
+            "request": "launch",
+            "type": "tye",
+            "watch": true,
+            "presentation": {
+                "hidden": false,
+                "group": "03-tye",
+                "order": 2
             }
         },
         {

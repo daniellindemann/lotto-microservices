@@ -113,6 +113,12 @@
             "label": "tye-run",
             "type": "tye-run",
             "watch": true
+        },
+        {
+            "label": "tye-run-docker",
+            "type": "tye-run",
+            "watch": true,
+            "docker": true
         }
     ]
 }

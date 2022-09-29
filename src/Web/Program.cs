@@ -27,7 +27,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// do not use https - networking assumptions are not the job of the program
+// app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 

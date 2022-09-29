@@ -1,9 +1,20 @@
+using LottoService.Extensions;
+
 using Web.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.Configure<LottoServiceConfig>(builder.Configuration.GetSection("LottoService"));
+builder.Services.AddOptions<LottoServiceConfig>()
+    .Bind(builder.Configuration.GetSection("LottoService"))
+    .PostConfigure((LottoServiceConfig lottoServiceConfig) =>
+    {
+        // check if type is enabled and get service url
+        if (builder.Configuration.IsTye())
+        {
+            lottoServiceConfig.Url = builder.Configuration.GetServiceUri("lottoservice")?.ToString() ?? lottoServiceConfig.Url;
+        }
+    });
 
 builder.Services.AddControllersWithViews();
 

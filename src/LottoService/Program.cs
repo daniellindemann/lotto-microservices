@@ -3,11 +3,26 @@ using LottoService.Application.Services;
 using LottoService.Config;
 using LottoService.Infrastructure.Services;
 
+using System.Linq;
+
+using Microsoft.Extensions.Options;
+using System.Collections;
+using LottoService.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.Configure<AppConfig>(builder.Configuration.GetSection("App"));
-builder.Services.Configure<RandomNumberServiceConfig>(builder.Configuration.GetSection("RandomNumberService"));
+builder.Services.AddOptions<RandomNumberServiceConfig>()
+    .Bind(builder.Configuration.GetSection("RandomNumberService"))
+    .PostConfigure((RandomNumberServiceConfig randomNumberServiceConfig) =>
+    {
+        // check if type is enabled and get service url
+        if (builder.Configuration.IsTye())
+        {
+            randomNumberServiceConfig.Url = builder.Configuration.GetServiceUri("randomnumberservice")?.ToString() ?? randomNumberServiceConfig.Url;
+        }
+    });
 builder.Services.AddHttpClient<IRandomNumberService, RandomNumberService>();
 builder.Services.AddScoped<IRandomNumberService, RandomNumberService>();
 builder.Services.AddScoped<ILottoNumberService, LottoNumberService>();

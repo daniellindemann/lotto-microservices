@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Tye.Extensions.Configuration" Version="0.10.0-alpha.21420.1" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="6.0.7" />
   </ItemGroup>
 

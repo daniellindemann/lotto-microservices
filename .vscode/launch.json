@@ -101,7 +101,7 @@
             }
         },
         {
-            "applicationName": "tye-lotto-microservices",
+            "applicationName": "lotto-microservices",
             "name": "Debug with Tye",
             "preLaunchTask": "tye-run",
             "request": "launch",

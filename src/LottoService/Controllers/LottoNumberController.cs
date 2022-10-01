@@ -37,4 +37,23 @@ public class LottoNumberController : ControllerBase
 
         return response;
     }
+
+    [HttpGet("history")]
+    public async Task<List<LottoFieldResponse>?> GetHistory()
+    {
+        _logger.LogInformation("Retrieved get request");
+
+        _logger.LogTrace("Calling lotto number service to retrieve history");
+        var lottoField = await _lottoNumberService.GetHistory();
+        _logger.LogTrace("Got lotto numbers history @{lottoNumbers}", lottoField);
+
+        // create custom response object
+        var response = lottoField?.Select(lf => new LottoFieldResponse()
+        {
+            Numbers = lf.Numbers,
+            SuperNumber = lf.SuperNumber
+        }).ToList();
+
+        return response;
+    }
 }

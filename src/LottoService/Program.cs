@@ -8,6 +8,8 @@ using System.Linq;
 using Microsoft.Extensions.Options;
 using System.Collections;
 using LottoService.Extensions;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +27,27 @@ builder.Services.AddOptions<RandomNumberServiceConfig>()
     });
 builder.Services.AddHttpClient<IRandomNumberService, RandomNumberService>();
 builder.Services.AddScoped<IRandomNumberService, RandomNumberService>();
-builder.Services.AddScoped<ILottoNumberService, LottoNumberService>();
+
+// configure lotto number service
+var redisConfig = new RedisConfig();
+builder.Configuration.GetSection("Redis").Bind(redisConfig);
+if (redisConfig.Enabled)
+{
+    builder.Services.Configure<RedisConfig>(builder.Configuration.GetSection("Redis"));
+    builder.Services.AddStackExchangeRedisCache((options) =>
+    {
+        options.Configuration = builder.Configuration.IsTye() ?
+            builder.Configuration.GetConnectionString("redis") :
+            builder.Configuration.GetConnectionString(RedisConfig.ConnectionStringName);
+        options.InstanceName = redisConfig.Instance;
+    });
+    builder.Services.AddSingleton(typeof(ICacheService<>), typeof(RedisCacheService<>));
+    builder.Services.AddScoped<ILottoNumberService, CachedLottoNumberService>();
+}
+else
+{
+    builder.Services.AddScoped<ILottoNumberService, LottoNumberService>();
+}
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

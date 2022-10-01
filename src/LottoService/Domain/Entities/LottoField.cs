@@ -2,8 +2,8 @@ namespace LottoService.Domain.Entities;
 
 public class LottoField
 {
-    public IList<int> Numbers { get; private set; } = new List<int>(6);
-    public int SuperNumber { get; private set; }
+    public IList<int> Numbers { get; set; } = new List<int>(6);
+    public int SuperNumber { get; set; }
 
     public void SetNumbers(IEnumerable<int> lottoNumbers)
     {

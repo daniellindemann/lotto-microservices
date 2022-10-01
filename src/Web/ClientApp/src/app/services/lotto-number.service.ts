@@ -23,8 +23,12 @@ export class LottoNumberService {
   }
 
   public getHistory() {
-    // const url = this.appConfigService.lottoService.url + 'api/lottonumber/history';
-    // return this.httpClient.get<LottoField>(url);
+    const url = this.appConfigService.lottoService.url + '/api/lottonumber/history';
+    return this.httpClient.get<LottoField[]>(url)
+      .pipe(
+        tap(_ => this.log('fetched lotto field history')),
+        catchError(this.handleError<LottoField[]>('getHistory', []))
+      );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

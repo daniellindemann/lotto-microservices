@@ -21,7 +21,7 @@ public class LottoNumberService : ILottoNumberService
         _appConfig = appConfig.Value;
     }
 
-    public async Task<LottoField> Draw()
+    public virtual async Task<LottoField> Draw()
     {
         _logger.LogInformation("Getting lotto field numbers");
         var lottoCount = _appConfig.NumberOfDraws;
@@ -45,6 +45,11 @@ public class LottoNumberService : ILottoNumberService
         lottoField.SetSuperNumber(superNumber);
 
         return lottoField;
+    }
+
+    public virtual Task<List<LottoField>?> GetHistory()
+    {
+        return Task.FromResult<List<LottoField>?>(null);
     }
 
     private async Task<IList<int>> GetUniqueNumbers(int min, int max, int count)

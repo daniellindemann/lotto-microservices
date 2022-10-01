@@ -18,6 +18,7 @@ export class LottoNumberComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadNumbers();
+    this.loadHistory();
   }
 
   reload() {
@@ -26,6 +27,13 @@ export class LottoNumberComponent implements OnInit {
       this.lottoFieldHistory.unshift(this.lottoField || {} as LottoField);
     }
     this.loadNumbers();
+  }
+
+  private loadHistory() {
+    this.lottoNumberService.getHistory()
+      .subscribe(lottoFieldHistory => {
+        this.lottoFieldHistory = lottoFieldHistory;
+      });
   }
 
   private loadNumbers() {

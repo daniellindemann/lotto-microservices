@@ -119,6 +119,12 @@
             "type": "tye-run",
             "watch": true,
             "docker": true
+        },
+        {
+            "label": "tye-run-redis",
+            "type": "tye-run",
+            "watch": true,
+            "path": "tye.redis.yaml"
         }
     ]
 }

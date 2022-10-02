@@ -11,7 +11,8 @@
 			// Options
 			"NODE_VERSION": "16",
 			"ANGULAR_VERSION": "13.3.4",
-            "TYE_VERSION": "0.11.0-alpha.22111.1"
+            "TYE_VERSION": "0.11.0-alpha.22111.1",
+            "DRAFT_VERSION": "0.0.24"
 		}
 	},
 
@@ -89,6 +90,7 @@
 		"docker-from-docker": "latest",
 		"kubectl-helm-minikube": "latest",
 		"azure-cli": "latest",
-		"powershell": "latest"
+		"powershell": "latest",
+        "golang": "latest"
 	}
 }

@@ -89,9 +89,13 @@
 	"remoteUser": "vscode",
 	"features": {
 		"docker-from-docker": "latest",
-		"kubectl-helm-minikube": "latest",
+		"kubectl-helm-minikube": {
+            "version": "latest",
+            "helm": "latest",
+            "minikube": "none"
+        },
 		"azure-cli": "latest",
-		"powershell": "latest",
-        "golang": "latest"
+		"powershell": "latest"
+        // "golang": "latest"
 	}
 }

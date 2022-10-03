@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: appinsights
-data:
-  instrumentation_key: c825f327-6794-4a70-8944-66eb75921393

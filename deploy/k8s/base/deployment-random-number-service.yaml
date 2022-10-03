@@ -2,22 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: web
-  name: web
+    app: random-number-service
+  name: random-number-service
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: web
+      app: random-number-service
   template:
     metadata:
       labels:
-        app: web
+        app: random-number-service
     spec:
       containers:
-      - image: crdlidemoaks4004.azurecr.io/dlindemann/lottoweb:1.0.0
+      - image: sample.azurecr.io/dlindemann/randomnumberservice:1.0.0
         imagePullPolicy: Always
-        name: lottoweb
+        name: randomnumberservice
         ports:
         - containerPort: 5000
         resources:
@@ -27,11 +27,3 @@ spec:
           limits:
             cpu: "250m"
             memory: "256Mi"
-        env:
-        - name: Api
-          value: http://lotto-service:8080
-        - name: APPINSIGHTS_INSTRUMENTATIONKEY
-          valueFrom:
-            configMapKeyRef:
-              key: instrumentation_key
-              name: appinsights

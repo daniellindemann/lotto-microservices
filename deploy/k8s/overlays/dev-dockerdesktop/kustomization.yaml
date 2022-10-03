@@ -3,8 +3,8 @@ bases:
 
 images:
 - name: dlindemann/lottoservice
-  newTag: 0.0.1
+  newTag: 1.0.0
 - name: dlindemann/randomnumberservice
-  newTag: 0.0.1
+  newTag: 1.0.0
 - name: dlindemann/lottoweb
-  newTag: 0.0.1
+  newTag: 1.0.0

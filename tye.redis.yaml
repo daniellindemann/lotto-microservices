@@ -15,6 +15,9 @@ services:
   project: src/RandomNumberService/RandomNumberService.csproj
 - name: lottoservice
   project: src/LottoService/LottoService.csproj
+  env:
+    - name: Redis__Enabled
+      value: "true"
 - name: redis
   image: redis
   bindings:

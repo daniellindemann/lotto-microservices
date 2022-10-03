@@ -15,7 +15,7 @@ spec:
         app: web
     spec:
       containers:
-      - image: csample.azurecr.io/dlindemann/lottoweb:1.0.0
+      - image: dlindemann/lottoweb:1.0.0
         imagePullPolicy: Always
         name: lottoweb
         ports:

@@ -15,7 +15,7 @@ spec:
         app: random-number-service
     spec:
       containers:
-      - image: sample.azurecr.io/dlindemann/randomnumberservice:1.0.0
+      - image: dlindemann/randomnumberservice:1.0.0
         imagePullPolicy: Always
         name: randomnumberservice
         ports:

@@ -15,7 +15,7 @@ spec:
         app: lotto-service
     spec:
       containers:
-      - image: sample.azurecr.io/dlindemann/lottoservice:1.0.0
+      - image: dlindemann/lottoservice:1.0.0
         imagePullPolicy: Always
         name: lottoservice
         ports:

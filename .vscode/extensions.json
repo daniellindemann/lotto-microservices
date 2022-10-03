@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "ms-dotnettools.csharp",
+        "angular.ng-template",
+        "ms-azuretools.vscode-tye",
+        "ms-azuretools.vscode-docker",
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        "ms-kubernetes-tools.vscode-aks-tools",
+        "redhat.vscode-yaml",
+        "mindaro.mindaro"
+    ]
+}

@@ -20,22 +20,14 @@ RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g @angular/
 ARG TYE_VERSION="none"
 RUN if [ "${TYE_VERSION}" != null ]; then su vscode -c "dotnet tool install -g Microsoft.Tye --version \"${TYE_VERSION}\""; fi
 
-# TODO: check architecture
-ARG DRAFT_VERSION="none"
-RUN if [ "${DRAFT_VERSION}" != null ]; then \
-    unameArch=$(uname --machine) && \
-    if [[ $unameArch==*"aarch64"* ]]; then installArch="arm64"; else installArch="arm64"; fi; \
-    wget --content-disposition "https://github.com/Azure/draft/releases/download/v${DRAFT_VERSION}/draft-linux-$installArch" && mv draft-linux-$installArch draft && chmod +x draft && mv draft /usr/bin/draft; \
-    fi
+# # TODO: check architecture
+# ARG DRAFT_VERSION="none"
+# RUN if [ "${DRAFT_VERSION}" != null ]; then \
+#     unameArch=$(uname --machine) && \
+#     if [[ $unameArch==*"aarch64"* ]]; then installArch="arm64"; else installArch="arm64"; fi; \
+#     wget --content-disposition "https://github.com/Azure/draft/releases/download/v${DRAFT_VERSION}/draft-linux-$installArch" && mv draft-linux-$installArch draft && chmod +x draft && mv draft /usr/bin/draft; \
+#     fi
 
-# ARG GO_VERSION="1.19.1"
-# RUN unameArch=$(uname --machine) \
-#     && if [[ $unameArch==*"aarch64"* ]]; then installArch="arm64"; else installArch="amd64"; fi \
-#     && wget --content-disposition "https://go.dev/dl/go${GO_VERSION}.linux-$installArch.tar.gz" \
+# install DAPR
+RUN wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash
 
-#     curl -O  \
-#     &&
-# RUN git clone https://github.com/Azure/draft.git \
-#     && cd draft/ \
-#     && make
-#     &&

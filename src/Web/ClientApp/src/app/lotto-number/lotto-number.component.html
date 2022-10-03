@@ -27,13 +27,13 @@
 
 <div class="cache-container">
   <div class="head">History</div>
-  <div class="numbers" *ngIf="lottoFieldHistory.length > 0">
+  <div class="numbers" *ngIf="lottoFieldHistory && lottoFieldHistory.length > 0">
     <div *ngFor="let lottoField of lottoFieldHistory">
       <span *ngFor="let number of lottoField.numbers">{{number | leadingZero}}&nbsp;&nbsp;</span>
       <span>&dash;&nbsp;&nbsp;{{lottoField.superNumber | leadingZero}}</span>
     </div>
   </div>
-  <div class="numbers" *ngIf="lottoFieldHistory.length == 0">
+  <div class="numbers" *ngIf="!lottoFieldHistory || lottoFieldHistory.length == 0">
     <div>No history available</div>
   </div>
 </div>

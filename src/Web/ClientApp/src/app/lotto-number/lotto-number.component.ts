@@ -22,10 +22,11 @@ export class LottoNumberComponent implements OnInit {
   }
 
   reload() {
-    // var lottoServiceUrl = this.appConfigService.appConfig.LottoService.url;
-    if (this.lottoFieldHistory != null) {
-      this.lottoFieldHistory.unshift(this.lottoField || {} as LottoField);
+    if (this.lottoFieldHistory == null) {
+      this.lottoFieldHistory = [];
     }
+
+    this.lottoFieldHistory.unshift(this.lottoField || {} as LottoField);
     this.loadNumbers();
   }
 

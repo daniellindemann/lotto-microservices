@@ -7,6 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<AppConfig>(builder.Configuration.GetSection("App"));
 builder.Services.AddSingleton<IRandomNumberService, RandomNumberService.Application.Services.RandomNumberService>();
 
+// add dapr if enabled
+var daprConfig = new DaprConfig();
+builder.Configuration.GetSection("Dapr").Bind(daprConfig);
+if(daprConfig.Enabled)
+{
+    builder.Services.AddDaprClient();
+}
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

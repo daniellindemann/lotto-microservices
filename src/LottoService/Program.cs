@@ -25,8 +25,19 @@ builder.Services.AddOptions<RandomNumberServiceConfig>()
             randomNumberServiceConfig.Url = builder.Configuration.GetServiceUri("randomnumberservice")?.ToString() ?? randomNumberServiceConfig.Url;
         }
     });
-builder.Services.AddHttpClient<IRandomNumberService, RandomNumberService>();
-builder.Services.AddScoped<IRandomNumberService, RandomNumberService>();
+
+// add dapr if enabled
+var daprConfig = new DaprConfig();
+builder.Configuration.GetSection("Dapr").Bind(daprConfig);
+if(daprConfig.Enabled)
+{
+    builder.Services.AddDaprClient();
+    builder.Services.AddScoped<IRandomNumberService, DaprRandomNumberService>();
+}
+else {
+    builder.Services.AddHttpClient<IRandomNumberService, RandomNumberService>();
+    builder.Services.AddScoped<IRandomNumberService, RandomNumberService>();
+}
 
 // configure lotto number service
 var redisConfig = new RedisConfig();
@@ -49,6 +60,7 @@ else
     builder.Services.AddScoped<ILottoNumberService, LottoNumberService>();
 }
 
+// add dapr if enabled
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

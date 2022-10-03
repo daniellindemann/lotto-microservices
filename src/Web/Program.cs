@@ -4,7 +4,6 @@ using Web.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 // Add services to the container.
 builder.Services.AddOptions<LottoServiceConfig>()
     .Bind(builder.Configuration.GetSection("LottoService"))
@@ -17,6 +16,7 @@ builder.Services.AddOptions<LottoServiceConfig>()
         }
     });
 
+builder.Services.AddDaprClient();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

@@ -1,19 +1,25 @@
 using Dapr.Client;
 
 using LottoService.Application.Interfaces;
+using LottoService.Config;
 using LottoService.Models.Requests;
+
+using Microsoft.Extensions.Options;
 
 namespace LottoService.Infrastructure.Services;
 
 public class DaprRandomNumberService : IRandomNumberService
 {
     private readonly DaprClient _daprClient;
+    private readonly RandomNumberServiceConfig _randomNumberServiceConfig;
     private readonly ILogger<DaprRandomNumberService> _logger;
 
     public DaprRandomNumberService(DaprClient daprClient,
+        IOptions<RandomNumberServiceConfig> randomNumberServiceConfig,
         ILogger<DaprRandomNumberService> logger)
     {
         _daprClient = daprClient;
+        _randomNumberServiceConfig = randomNumberServiceConfig.Value;
         _logger = logger;
     }
 
@@ -24,7 +30,7 @@ public class DaprRandomNumberService : IRandomNumberService
         _logger.LogTrace("Creating http request object");
         var request = _daprClient.CreateInvokeMethodRequest<RandomNumberRequest>(
             HttpMethod.Post,
-            "blub",
+            _randomNumberServiceConfig.DaprAppId,
             "api/RandomNumber",
             new RandomNumberRequest()
             {

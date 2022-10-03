@@ -148,6 +148,93 @@
                 "group": "50-attach",
                 "order": 1
             }
+        },
+        {
+            "name": "RandomNumberService with Dapr",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "dapr-debug-RandomNumberService",
+            "postDebugTask": "daprd-down-RandomNumberService",
+            "program": "${workspaceFolder}/src/RandomNumberService/bin/Debug/net6.0/RandomNumberService.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/RandomNumberService",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+            "logging": {
+                "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "04-dapr",
+                "order": 1
+            }
+        },
+        {
+            "name": "LottoService with Dapr",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "dapr-debug-LottoService",
+            "postDebugTask": "daprd-down-LottoService",
+            "program": "${workspaceFolder}/src/LottoService/bin/Debug/net6.0/LottoService.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/LottoService",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+            "logging": {
+                "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "04-dapr",
+                "order": 2
+            }
+        },
+        {
+            "name": "Web with Dapr",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "dapr-debug-Web",
+            "postDebugTask": "daprd-down-Web",
+            "program": "${workspaceFolder}/src/Web/bin/Debug/net6.0/Web.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Web",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+            "logging": {
+                "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "04-dapr",
+                "order": 3
+            }
         }
     ],
     "compounds": [

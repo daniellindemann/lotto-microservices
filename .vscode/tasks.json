@@ -125,6 +125,42 @@
             "type": "tye-run",
             "watch": true,
             "path": "tye.redis.yaml"
+        },
+        {
+            "appId": "randomnumberservice",
+            "appPort": 5000,
+            "label": "dapr-debug-RandomNumberService",
+            "type": "dapr",
+            "dependsOn": "build-RandomNumberService"
+        },
+        {
+            "appId": "randomnumberservice",
+            "label": "daprd-down-RandomNumberService",
+            "type": "daprd-down"
+        },
+        {
+            "appId": "lottoservice",
+            "appPort": 5002,
+            "label": "dapr-debug-LottoService",
+            "type": "dapr",
+            "dependsOn": "build-LottoService"
+        },
+        {
+            "appId": "lottoservice",
+            "label": "daprd-down-LottoService",
+            "type": "daprd-down"
+        },
+        {
+            "appId": "web",
+            "appPort": 5004,
+            "label": "dapr-debug-Web",
+            "type": "dapr",
+            "dependsOn": "build-Web"
+        },
+        {
+            "appId": "web",
+            "label": "daprd-down-Web",
+            "type": "daprd-down"
         }
     ]
 }

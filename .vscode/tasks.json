@@ -129,6 +129,9 @@
         {
             "appId": "randomnumberservice",
             "appPort": 5000,
+            "httpPort": 3500,
+            "appSsl": false,
+            "appProtocol": "http",
             "label": "dapr-debug-RandomNumberService",
             "type": "dapr",
             "dependsOn": "build-RandomNumberService"
@@ -141,6 +144,9 @@
         {
             "appId": "lottoservice",
             "appPort": 5002,
+            "httpPort": 3501,
+            "appSsl": false,
+            "appProtocol": "http",
             "label": "dapr-debug-LottoService",
             "type": "dapr",
             "dependsOn": "build-LottoService"
@@ -153,6 +159,9 @@
         {
             "appId": "web",
             "appPort": 5004,
+            "httpPort": 3502,
+            "appSsl": false,
+            "appProtocol": "http",
             "label": "dapr-debug-Web",
             "type": "dapr",
             "dependsOn": "build-Web"

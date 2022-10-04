@@ -16,15 +16,10 @@ builder.Services.AddOptions<LottoServiceConfig>()
         }
     });
 
-
 // add dapr if enabled
 builder.Services.Configure<DaprConfig>(builder.Configuration.GetSection("Dapr"));
-var daprConfig = new DaprConfig();
-builder.Configuration.GetSection("Dapr").Bind(daprConfig);
-if(daprConfig.Enabled)
-{
-    builder.Services.AddDaprClient();
-}
+builder.Services.AddDaprClient();   // always enable dapr client
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

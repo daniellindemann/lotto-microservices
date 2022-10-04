@@ -130,11 +130,13 @@
             "appId": "randomnumberservice",
             "appPort": 5000,
             "httpPort": 3500,
+            "grpcPort": 50001,
             "appSsl": false,
             "appProtocol": "http",
             "label": "dapr-debug-RandomNumberService",
             "type": "dapr",
-            "dependsOn": "build-RandomNumberService"
+            "dependsOn": "build-RandomNumberService",
+            "componentsPath": "dapr/components"
         },
         {
             "appId": "randomnumberservice",
@@ -145,6 +147,7 @@
             "appId": "lottoservice",
             "appPort": 5002,
             "httpPort": 3501,
+            "grpcPort": 50002,
             "appSsl": false,
             "appProtocol": "http",
             "label": "dapr-debug-LottoService",
@@ -161,11 +164,13 @@
             "appId": "web",
             "appPort": 5004,
             "httpPort": 3502,
+            "grpcPort": 50003,
             "appSsl": false,
             "appProtocol": "http",
             "label": "dapr-debug-Web",
             "type": "dapr",
-            "dependsOn": "build-Web"
+            "dependsOn": "build-Web",
+            "componentsPath": "dapr/components"
         },
         {
             "appId": "web",

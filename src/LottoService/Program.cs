@@ -49,6 +49,7 @@ if (redisConfig.Enabled)
 
     if (daprConfig.Enabled)
     {
+        builder.Services.AddHttpClient<DaprRandomNumberService>();
         builder.Services.AddScoped<ILottoNumberService, DaprCachedLottoNumberService>();
     }
     else

@@ -251,6 +251,20 @@
                 "group": "02-all",
                 "order": 1
             }
+        },
+        {
+            "name": "All projects with Dapr (RandomNumberService + LottoService + Web)",
+            "configurations": [
+                "RandomNumberService with Dapr",
+                "LottoService with Dapr",
+                "Web with Dapr"
+            ],
+            "stopAll": true,
+            "presentation": {
+                "hidden": false,
+                "group": "05-all-dapr",
+                "order": 1
+            }
         }
     ]
 }

@@ -29,12 +29,13 @@ builder.Services.AddOptions<RandomNumberServiceConfig>()
 // add dapr if enabled
 var daprConfig = new DaprConfig();
 builder.Configuration.GetSection("Dapr").Bind(daprConfig);
-if(daprConfig.Enabled)
+if (daprConfig.Enabled)
 {
     builder.Services.AddDaprClient();
     builder.Services.AddScoped<IRandomNumberService, DaprRandomNumberService>();
 }
-else {
+else
+{
     builder.Services.AddHttpClient<IRandomNumberService, RandomNumberService>();
     builder.Services.AddScoped<IRandomNumberService, RandomNumberService>();
 }
@@ -45,15 +46,24 @@ builder.Configuration.GetSection("Redis").Bind(redisConfig);
 if (redisConfig.Enabled)
 {
     builder.Services.Configure<RedisConfig>(builder.Configuration.GetSection("Redis"));
-    builder.Services.AddStackExchangeRedisCache((options) =>
+
+    if (daprConfig.Enabled)
     {
-        options.Configuration = builder.Configuration.IsTye() ?
-            builder.Configuration.GetConnectionString("redis") :
-            builder.Configuration.GetConnectionString(RedisConfig.ConnectionStringName);
-        options.InstanceName = redisConfig.Instance;
-    });
-    builder.Services.AddSingleton(typeof(ICacheService<>), typeof(RedisCacheService<>));
-    builder.Services.AddScoped<ILottoNumberService, CachedLottoNumberService>();
+        builder.Services.AddHttpClient<DaprRandomNumberService>();
+        builder.Services.AddScoped<ILottoNumberService, DaprCachedLottoNumberService>();
+    }
+    else
+    {
+        builder.Services.AddStackExchangeRedisCache((options) =>
+        {
+            options.Configuration = builder.Configuration.IsTye() ?
+                builder.Configuration.GetConnectionString("redis") :
+                builder.Configuration.GetConnectionString(RedisConfig.ConnectionStringName);
+            options.InstanceName = redisConfig.Instance;
+        });
+        builder.Services.AddSingleton(typeof(ICacheService<>), typeof(RedisCacheService<>));
+        builder.Services.AddScoped<ILottoNumberService, CachedLottoNumberService>();
+    }
 }
 else
 {

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 registry=${1:-localhost:4999}
-version=${2:-0.0.1}
+version=${2:-1.0.0}
 
 echo "Registry: $registry"
 echo "Version: $version"

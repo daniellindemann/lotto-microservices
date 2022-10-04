@@ -5,15 +5,19 @@
 #    https://aka.ms/AA7q20u
 #
 name: lotto-microservices
-# extensions:
-# - name: dapr
-#   config: common
-#   enable-profiling: true
-#   services:
-#     frontend:
-#       components-path: "./frontend/components"
-#     backend:
-#       components-path: "./backend/components"
+extensions:
+- name: dapr
+  config: common
+  enable-profiling: true
+  app-protocol: http
+  app-ssl: false
+  services:
+    randomnumberservice:
+      components-path: "./dapr/components"
+    lottoservice:
+      components-path: "./dapr/components"
+    web:
+      components-path: "./dapr/components"
 services:
 - name: web
   project: src/Web/Web.csproj

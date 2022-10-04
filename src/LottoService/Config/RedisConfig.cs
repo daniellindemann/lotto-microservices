@@ -4,5 +4,5 @@ public class RedisConfig
 
     public bool Enabled { get; set; }
     public string? Instance { get; set; }
-    // public string? ConnectionString { get; set; }
+    public string? DaprStoreId { get; set; }
 }

@@ -149,7 +149,8 @@
             "appProtocol": "http",
             "label": "dapr-debug-LottoService",
             "type": "dapr",
-            "dependsOn": "build-LottoService"
+            "dependsOn": "build-LottoService",
+            "componentsPath": "dapr/components"
         },
         {
             "appId": "lottoservice",

@@ -5,9 +5,11 @@ metadata:
     app: random-number-service
   name: random-number-service
 spec:
+  type: ClusterIP
   ports:
   - port: 8080
     protocol: TCP
     targetPort: 5000
+    name: http
   selector:
     app: random-number-service

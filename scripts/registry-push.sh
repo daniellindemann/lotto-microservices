@@ -11,9 +11,9 @@ if [ -z "${string##*.azurecr.io*}" ]; then
 fi
 
 # build projects
-$(dirname "$0")/../../src/RandomNumberService/docker-build.sh
-$(dirname "$0")/../../src/LottoService/docker-build.sh
-$(dirname "$0")/../../src/Web/docker-build.sh
+$(dirname "$0")/../src/RandomNumberService/docker-build.sh
+$(dirname "$0")/../src/LottoService/docker-build.sh
+$(dirname "$0")/../src/Web/docker-build.sh
 
 # tag the images for local registry
 docker tag dlindemann/randomnumberservice $registry/dlindemann/randomnumberservice:$version

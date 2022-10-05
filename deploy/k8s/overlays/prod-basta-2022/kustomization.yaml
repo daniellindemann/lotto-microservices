@@ -1,6 +1,13 @@
 resources:
 - ../../base
 
+commonLabels:
+  environment: prod
+  hosted-on: azure
+
+# container registry will not be available after basta 2022
+# recreate it, if required
+
 images:
 - name: dlindemann/lottoservice
   newName: crdlibasta2022.azurecr.io/dlindemann/lottoservice

@@ -1,15 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: lotto-service
-  name: lotto-service
+  name: random-number-service
 spec:
-  type: ClusterIP
   ports:
   - port: 8080
     protocol: TCP
     targetPort: 5000
     name: http
   selector:
-    app: lotto-service
+    app: random-number-service

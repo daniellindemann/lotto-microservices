@@ -8,7 +8,9 @@ patchesStrategicMerge:
 - deployment-lotto-service.yaml
 - deployment-random-number-service.yaml
 - deployment-web.yaml
-
+- service-lotto-service.yaml
+- service-random-number-service.yaml
+- service-web.yaml
 
 images:
 - name: dlindemann/lottoservice

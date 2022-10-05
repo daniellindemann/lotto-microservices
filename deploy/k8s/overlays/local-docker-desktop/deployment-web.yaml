@@ -10,3 +10,7 @@ spec:
       # see https://github.com/kubernetes/kubernetes/issues/1293#issuecomment-357326426
       - imagePullPolicy: Never
         name: lottoweb
+        env:
+        # can be moved to config, if wanted
+        - name: LottoService__Url
+          value: http://localhost:8081

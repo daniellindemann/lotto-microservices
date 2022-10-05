@@ -21,6 +21,13 @@ ARG TYE_VERSION="none"
 RUN if [ "${TYE_VERSION}" != null ]; then su vscode -c "dotnet tool install -g Microsoft.Tye --version \"${TYE_VERSION}\""; fi
 
 # # TODO: check architecture
+
+# maybe its simpler
+# DRAFT_VERSION="0.0.24" # draft version
+# DRAFT_ARCH="amd64" # draft archicture
+# curl -O -L "https://github.com/Azure/draft/releases/download/v${DRAFT_VERSION}/draft-linux-$DRAFT_ARCH"
+# mv draft-linux-$DRAFT_ARCH draft && chmod +x draft && mv draft /usr/bin/draft
+
 # ARG DRAFT_VERSION="none"
 # RUN if [ "${DRAFT_VERSION}" != null ]; then \
 #     unameArch=$(uname --machine) && \

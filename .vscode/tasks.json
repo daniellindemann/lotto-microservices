@@ -176,6 +176,12 @@
             "appId": "web",
             "label": "daprd-down-Web",
             "type": "daprd-down"
-        }
+        },
+        {
+            "label": "tye-run-dapr",
+            "type": "tye-run",
+            "watch": true,
+            "path": "tye.dapr.yaml"
+        },
     ]
 }

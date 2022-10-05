@@ -21,7 +21,8 @@ services:
 - name: redis
   image: redis
   bindings:
-  - port: 6379
+  - port: 6378  # use port 6378 to have no overlap with the default dapr redis
+    containerPort: 6379
     connectionString: "127.0.0.1:${port}" 
 - name: redis-cli
   image: redis

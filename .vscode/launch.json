@@ -113,19 +113,19 @@
                 "order": 1
             }
         },
-        {
-            "applicationName": "lotto-microservices",
-            "name": "Debug with Tye (Docker)",
-            "preLaunchTask": "tye-run-docker",
-            "request": "launch",
-            "type": "tye",
-            "watch": true,
-            "presentation": {
-                "hidden": false,
-                "group": "03-tye",
-                "order": 2
-            }
-        },
+        // {
+        //     "applicationName": "lotto-microservices",
+        //     "name": "Debug with Tye (Docker)",
+        //     "preLaunchTask": "tye-run-docker",
+        //     "request": "launch",
+        //     "type": "tye",
+        //     "watch": true,
+        //     "presentation": {
+        //         "hidden": false,
+        //         "group": "03-tye",
+        //         "order": 2
+        //     }
+        // },
         {
             "applicationName": "lotto-microservices",
             "name": "Debug with Tye (Redis)",
@@ -137,16 +137,6 @@
                 "hidden": false,
                 "group": "03-tye",
                 "order": 3
-            }
-        },
-        {
-            "name": ".NET Core Attach",
-            "type": "coreclr",
-            "request": "attach",
-            "presentation": {
-                "hidden": false,
-                "group": "50-attach",
-                "order": 1
             }
         },
         {
@@ -193,7 +183,10 @@
                 "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
             },
             "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                // Update configuration for dapr development
+                "Dapr__Enabled": "true",
+                "Redis__Enabled": "true"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
@@ -222,7 +215,9 @@
                 "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
             },
             "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                // Update configuration for dapr development
+                "Dapr__Enabled": "true"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
@@ -234,6 +229,29 @@
                 "hidden": false,
                 "group": "04-dapr",
                 "order": 3
+            }
+        },
+        {
+            "applicationName": "lotto-microservices",
+            "name": "Debug with Tye and Dapr",
+            "preLaunchTask": "tye-run-dapr",
+            "request": "launch",
+            "type": "tye",
+            "watch": true,
+            "presentation": {
+                "hidden": false,
+                "group": "05-tye-dapr",
+                "order": 1
+            }
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "presentation": {
+                "hidden": false,
+                "group": "50-attach",
+                "order": 1
             }
         }
     ],

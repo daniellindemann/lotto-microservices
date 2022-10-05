@@ -55,17 +55,37 @@ public class DaprCachedLottoNumberService : LottoNumberService
         }
     }
 
+    private async Task UpdateCache(LottoField lottoField)
+    {
+        var cachedLottoFields = await GetHistory() ?? new List<LottoField>();
+        cachedLottoFields?.Insert(0, lottoField);
+
+        if (UseHttp)
+        {
+            await UpdateCacheHttp(cachedLottoFields);
+        }
+        else
+        {
+            await UpdateCacheDaprClient(cachedLottoFields);
+        }
+    }
+
     private async Task<List<LottoField>?> GetHistoryDaprClient()
     {
         var cachedLottoFields = await _daprClient.GetStateAsync<List<LottoField>>(_redisConfig.DaprStoreId, CacheKey);
         return cachedLottoFields;
     }
 
+    private async Task UpdateCacheDaprClient(List<LottoField>? lottoFields)
+    {
+        await _daprClient.SaveStateAsync(_redisConfig.DaprStoreId, CacheKey, lottoFields);
+    }
+
     private async Task<List<LottoField>?> GetHistoryHttp()
     {
         var httpClient = _httpClientFactory.CreateClient();
 
-        var url = $"http://localhost:3500/v1.0/state/statestore/{CacheKey}";    // yep, it's hardcoded for demo purpose
+        var url = $"http://localhost:3500/v1.0/state/{_redisConfig.DaprStoreId}/{CacheKey}";    // yep, is hardcoded for demo purpose; will not work with tye and dapr config
         var request = new HttpRequestMessage()
         {
             Headers =
@@ -86,26 +106,11 @@ public class DaprCachedLottoNumberService : LottoNumberService
         return cachedLottoFields;
     }
 
-    private async Task UpdateCache(LottoField lottoField)
-    {
-        var cachedLottoFields = await GetHistory() ?? new List<LottoField>();
-        cachedLottoFields?.Insert(0, lottoField);
-
-        if (UseHttp)
-        {
-            await UpdateCacheHttp(cachedLottoFields);
-        }
-        else
-        {
-            await UpdateCacheDaprClient(cachedLottoFields);
-        }
-    }
-
     private async Task UpdateCacheHttp(List<LottoField>? lottoFields)
     {
         var httpClient = _httpClientFactory.CreateClient();
 
-        var url = "http://localhost:3500/v1.0/state/statestore";
+        var url = $"http://localhost:3500/v1.0/state/{_redisConfig.DaprStoreId}";    // yep, url is hardcoded for demo purpose; will not work with tye and dapr config
         var request = new HttpRequestMessage()
         {
             Headers =
@@ -126,10 +131,5 @@ public class DaprCachedLottoNumberService : LottoNumberService
         var response = await httpClient.SendAsync(request);
         if (!response.IsSuccessStatusCode)
             throw new KeyNotFoundException($"No data on key {CacheKey}");
-    }
-
-    private async Task UpdateCacheDaprClient(List<LottoField>? lottoFields)
-    {
-        await _daprClient.SaveStateAsync(_redisConfig.DaprStoreId, CacheKey, lottoFields);
     }
 }

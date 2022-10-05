@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: random-number-service
+spec:
+  template:
+    spec:
+      containers:
+      # for local dev, imagePullPolicy needs to be disabled, otherwise kubernetes will run to the default container registry (docker hub)
+      # see https://github.com/kubernetes/kubernetes/issues/1293#issuecomment-357326426
+      - imagePullPolicy: Never
+        name: randomnumberservice

@@ -245,6 +245,82 @@
             }
         },
         {
+            "name": "RandomNumberService with Kubernetes",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "bridge-to-kubernetes-docker-desktop-RandomNumberService.compound",
+            "program": "${workspaceFolder}/src/RandomNumberService/bin/Debug/net6.0/RandomNumberService.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/RandomNumberService",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://+:5000"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+            "logging": {
+                "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "06-bridge-to-k8s",
+                "order": 1
+            }
+        },
+        {
+            
+            "name": "LottoService with Kubernetes",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "bridge-to-kubernetes-docker-desktop-LottoService.compound",
+            "program": "${workspaceFolder}/src/LottoService/bin/Debug/net6.0/LottoService.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/LottoService",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://+:5002"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+            "logging": {
+                "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "06-bridge-to-k8s",
+                "order": 2
+            }
+        },
+        {
+            "name": "Web with Kubernetes",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "bridge-to-kubernetes-docker-desktop-Web.compound",
+            "program": "${workspaceFolder}/src/Web/bin/Debug/net6.0/Web.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Web",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://+:5004"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+            "logging": {
+                "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "06-bridge-to-k8s",
+                "order": 3
+            }
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",

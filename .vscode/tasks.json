@@ -183,5 +183,65 @@
             "watch": true,
             "path": "tye.dapr.yaml"
         },
+        {
+            "label": "bridge-to-kubernetes-docker-desktop-RandomNumberService",
+            "type": "bridge-to-kubernetes.resource",
+            "resource": "random-number-service",
+            "resourceType": "service",
+            "ports": [
+                5000
+            ],
+            "targetCluster": "docker-desktop",
+            "targetNamespace": "default",
+            "useKubernetesServiceEnvironmentVariables": true
+        },
+        {
+            "label": "bridge-to-kubernetes-docker-desktop-RandomNumberService.compound",
+            "dependsOn": [
+                "bridge-to-kubernetes-docker-desktop-RandomNumberService",
+                "build-RandomNumberService"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "bridge-to-kubernetes-docker-desktop-LottoService",
+            "type": "bridge-to-kubernetes.resource",
+            "resource": "lotto-service",
+            "resourceType": "service",
+            "ports": [
+                5002
+            ],
+            "targetCluster": "docker-desktop",
+            "targetNamespace": "default",
+            "useKubernetesServiceEnvironmentVariables": true
+        },
+        {
+            "label": "bridge-to-kubernetes-docker-desktop-LottoService.compound",
+            "dependsOn": [
+                "bridge-to-kubernetes-docker-desktop-LottoService",
+                "build-LottoService"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "bridge-to-kubernetes-docker-desktop-Web",
+            "type": "bridge-to-kubernetes.resource",
+            "resource": "web",
+            "resourceType": "service",
+            "ports": [
+                5002
+            ],
+            "targetCluster": "docker-desktop",
+            "targetNamespace": "default",
+            "useKubernetesServiceEnvironmentVariables": true
+        },
+        {
+            "label": "bridge-to-kubernetes-docker-desktop-Web.compound",
+            "dependsOn": [
+                "bridge-to-kubernetes-docker-desktop-Web",
+                "build-Web"
+            ],
+            "dependsOrder": "sequence"
+        }
     ]
 }

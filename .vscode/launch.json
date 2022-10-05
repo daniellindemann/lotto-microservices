@@ -114,7 +114,7 @@
             }
         },
         {
-            "applicationName": "tye-lotto-microservices",
+            "applicationName": "lotto-microservices",
             "name": "Debug with Tye (Docker)",
             "preLaunchTask": "tye-run-docker",
             "request": "launch",
@@ -127,7 +127,7 @@
             }
         },
         {
-            "applicationName": "tye-lotto-microservices",
+            "applicationName": "lotto-microservices",
             "name": "Debug with Tye (Redis)",
             "preLaunchTask": "tye-run-redis",
             "request": "launch",
@@ -248,8 +248,8 @@
             "stopAll": true,
             "presentation": {
                 "hidden": false,
-                "group": "02-all",
-                "order": 1
+                "group": "01-plain",
+                "order": 4
             }
         },
         {
@@ -262,8 +262,8 @@
             "stopAll": true,
             "presentation": {
                 "hidden": false,
-                "group": "05-all-dapr",
-                "order": 1
+                "group": "04-dapr",
+                "order": 4
             }
         }
     ]

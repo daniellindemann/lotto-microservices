@@ -15,6 +15,10 @@
             "DRAFT_VERSION": "0.0.24"
 		}
 	},
+    "runArgs": [
+        "--network=host"	// TODO: is this good on windows and wsl??
+		// OR docker on docker better?
+    ],
 
 	// Configure tool-specific properties.
 	"customizations": {
@@ -74,7 +78,10 @@
 	//
 	//    * If only using Remote - Containers with a local container, uncomment this line instead:
 	//      "mounts": [ "source=${env:HOME}${env:USERPROFILE}/.aspnet/https,target=/home/vscode/.aspnet/https,type=bind" ],
-	"mounts": [ "source=${env:HOME}${env:USERPROFILE}/.aspnet/https,target=/home/vscode/.aspnet/https,type=bind" ],
+	"mounts": [
+        "source=${env:HOME}${env:USERPROFILE}/.aspnet/https,target=/home/vscode/.aspnet/https,type=bind",
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.kube,target=/home/vscode/.kube,type=bind,consistency=cached"
+    ],
 	"remoteEnv": {
 		// set environment variables from host
 		"ASPNETCORE_Kestrel__Certificates__Default__Path": "/home/vscode/.aspnet/https/aspnetapp.pfx",

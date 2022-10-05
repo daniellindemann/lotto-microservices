@@ -20,13 +20,21 @@ RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g @angular/
 ARG TYE_VERSION="none"
 RUN if [ "${TYE_VERSION}" != null ]; then su vscode -c "dotnet tool install -g Microsoft.Tye --version \"${TYE_VERSION}\""; fi
 
+# install DAPR
+RUN wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash
+#     && dapr uninstall --all \
+#     && dapr init
+
 # # TODO: check architecture
 
 # maybe its simpler
 # DRAFT_VERSION="0.0.24" # draft version
 # DRAFT_ARCH="amd64" # draft archicture
-# curl -O -L "https://github.com/Azure/draft/releases/download/v${DRAFT_VERSION}/draft-linux-$DRAFT_ARCH"
-# mv draft-linux-$DRAFT_ARCH draft && chmod +x draft && mv draft /usr/bin/draft
+# DRAFT_ARCH="arm64" # draft archicture
+# DRAFT_PLATFORM="linux"
+# DRAFT_PLATFORM="darwin"
+# curl -O -L "https://github.com/Azure/draft/releases/download/v${DRAFT_VERSION}/draft-${DRAFT_PLATFORM}-${DRAFT_ARCH}"
+# mv draft-$DRAFT_PLATFORM-$DRAFT_ARCH draft && chmod +x draft && mv draft /usr/local/bin/draft
 
 # ARG DRAFT_VERSION="none"
 # RUN if [ "${DRAFT_VERSION}" != null ]; then \
@@ -34,7 +42,3 @@ RUN if [ "${TYE_VERSION}" != null ]; then su vscode -c "dotnet tool install -g M
 #     if [[ $unameArch==*"aarch64"* ]]; then installArch="arm64"; else installArch="arm64"; fi; \
 #     wget --content-disposition "https://github.com/Azure/draft/releases/download/v${DRAFT_VERSION}/draft-linux-$installArch" && mv draft-linux-$installArch draft && chmod +x draft && mv draft /usr/bin/draft; \
 #     fi
-
-# install DAPR
-RUN wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash
-

@@ -1,5 +1,7 @@
 resources:
 - ../../base
+- ingress-web.yaml
+- ingress-lotto-service.yaml
 
 commonLabels:
   environment: prod

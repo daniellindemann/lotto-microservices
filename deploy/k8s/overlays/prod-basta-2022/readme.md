@@ -77,10 +77,10 @@
         - not public
     - Lotto Number Service
         - public
-        - http://web.lotto.<DOMAIN>
+        - http://web.lotto.<DOMAIN_NAME>
     - Web
         - public
-        - http://api.lotto.<DOMAIN>
+        - http://api.lotto.<DOMAIN_NAME>
 - Alles auf Port 80
 
 ## Deployment

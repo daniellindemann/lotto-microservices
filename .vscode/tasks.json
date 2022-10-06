@@ -183,6 +183,9 @@
             "watch": true,
             "path": "tye.dapr.yaml"
         },
+        // bridge to docker-desktop
+        // cluster: docker-desktop
+        // namespace: default
         {
             "label": "bridge-to-kubernetes-docker-desktop-RandomNumberService",
             "type": "bridge-to-kubernetes.resource",
@@ -239,6 +242,69 @@
             "label": "bridge-to-kubernetes-docker-desktop-Web.compound",
             "dependsOn": [
                 "bridge-to-kubernetes-docker-desktop-Web",
+                "build-Web"
+            ],
+            "dependsOrder": "sequence"
+        },
+        // bridge to kubernetes aks
+        // cluster: aks-dli-basta2022
+        // namespace: default
+        {
+            "label": "bridge-to-kubernetes-aks-dli-basta2022-RandomNumberService",
+            "type": "bridge-to-kubernetes.resource",
+            "resource": "random-number-service",
+            "resourceType": "service",
+            "ports": [
+                5000
+            ],
+            "targetCluster": "aks-dli-basta2022",
+            "targetNamespace": "default",
+            "useKubernetesServiceEnvironmentVariables": true
+        },
+        {
+            "label": "bridge-to-kubernetes-aks-dli-basta2022-RandomNumberService.compound",
+            "dependsOn": [
+                "bridge-to-kubernetes-aks-dli-basta2022-RandomNumberService",
+                "build-RandomNumberService"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "bridge-to-kubernetes-aks-dli-basta2022-LottoService",
+            "type": "bridge-to-kubernetes.resource",
+            "resource": "lotto-service",
+            "resourceType": "service",
+            "ports": [
+                5002
+            ],
+            "targetCluster": "aks-dli-basta2022",
+            "targetNamespace": "default",
+            "useKubernetesServiceEnvironmentVariables": true
+        },
+        {
+            "label": "bridge-to-kubernetes-aks-dli-basta2022-LottoService.compound",
+            "dependsOn": [
+                "bridge-to-kubernetes-aks-dli-basta2022-LottoService",
+                "build-LottoService"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "bridge-to-kubernetes-aks-dli-basta2022-Web",
+            "type": "bridge-to-kubernetes.resource",
+            "resource": "web",
+            "resourceType": "service",
+            "ports": [
+                5002
+            ],
+            "targetCluster": "aks-dli-basta2022",
+            "targetNamespace": "default",
+            "useKubernetesServiceEnvironmentVariables": true
+        },
+        {
+            "label": "bridge-to-kubernetes-aks-dli-basta2022-Web.compound",
+            "dependsOn": [
+                "bridge-to-kubernetes-aks-dli-basta2022-Web",
                 "build-Web"
             ],
             "dependsOrder": "sequence"

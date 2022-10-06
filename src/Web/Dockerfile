@@ -10,7 +10,7 @@ RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /
 USER appuser
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
-# TODO: how to argument
+# TODO: set version as argument
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get install -y nodejs
 WORKDIR /src

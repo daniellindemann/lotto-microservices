@@ -4,6 +4,8 @@ metadata:
   name: ingress-web
   labels:
     app: web
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   ingressClassName: nginx
   rules:
@@ -17,8 +19,3 @@ spec:
                 name: web
                 port:
                   number: 8080
-  # # This section is only required if TLS is to be enabled for the Ingress
-  # tls:
-  #   - hosts:
-  #     - www.example.com
-  #     secretName: example-tls

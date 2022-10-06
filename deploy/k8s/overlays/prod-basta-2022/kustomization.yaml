@@ -1,11 +1,15 @@
 resources:
 - ../../base
+- configmap-web.yaml
 - ingress-web.yaml
 - ingress-lotto-service.yaml
 
 commonLabels:
   environment: prod
   hosted-on: azure
+
+patchesStrategicMerge:
+- deployment-web.yaml
 
 # container registry will not be available after basta 2022
 # recreate it, if required
@@ -15,8 +19,8 @@ images:
   newName: crdlibasta2022.azurecr.io/dlindemann/lottoservice
   newTag: 1.0.0
 - name: dlindemann/randomnumberservice
-  newName: crdlibasta2022.azurecr.io/dlindemann/lottoservice
+  newName: crdlibasta2022.azurecr.io/dlindemann/randomnumberservice
   newTag: 1.0.0
 - name: dlindemann/lottoweb
-  newName: crdlibasta2022.azurecr.io/dlindemann/lottoservice
+  newName: crdlibasta2022.azurecr.io/dlindemann/lottoweb
   newTag: 1.0.0

@@ -1,0 +1,43 @@
+# tye application configuration file
+# read all about it at https://github.com/dotnet/tye
+#
+# when you've given us a try, we'd love to know what you think:
+#    https://aka.ms/AA7q20u
+#
+name: lotto-microservices
+extensions:
+- name: dapr
+  # log-level: debug
+  app-protocol: http
+  app-ssl: false
+  components-path: "./dapr/components/"
+services:
+- name: web
+  project: src/Web/Web.csproj
+  env:
+    - name: ASPNETCORE_HOSTINGSTARTUPASSEMBLIES
+      value: Microsoft.AspNetCore.SpaProxy
+    - name: Dapr__Enabled
+      value: "true"
+- name: randomnumberservice
+  project: src/RandomNumberService/RandomNumberService.csproj
+- name: lottoservice
+  project: src/LottoService/LottoService.csproj
+  env:
+    - name: Redis__Enabled
+      value: "true"
+    - name: Dapr__Enabled
+      value: "true"
+
+# This may conflict with the redis instance that dapr manages.
+#
+# Doing a `docker ps` can show if its already running. If that's the case
+# then comment out out when running locally. 
+# - name: redis
+#   image: redis
+#   bindings:
+#   - port: 6378
+#     connectionString: "127.0.0.1:${port}" 
+# - name: redis-cli
+#   image: redis
+#   args: "redis-cli -h redis MONITOR"

@@ -1,0 +1,21 @@
+resources:
+- ../../base
+
+commonLabels:
+  environment: docker-desktop
+
+patchesStrategicMerge:
+- deployment-lotto-service.yaml
+- deployment-random-number-service.yaml
+- deployment-web.yaml
+- service-lotto-service.yaml
+- service-random-number-service.yaml
+- service-web.yaml
+
+images:
+- name: dlindemann/lottoservice
+  newTag: 1.0.0
+- name: dlindemann/randomnumberservice
+  newTag: 1.0.0
+- name: dlindemann/lottoweb
+  newTag: 1.0.0

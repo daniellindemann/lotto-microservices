@@ -2,11 +2,150 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "RandomNumberService - .NET Core Launch",
+            // Use IntelliSense to find out which attributes exist for C# debugging
+            // Use hover for the description of the existing attributes
+            // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+            "name": "Web",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-Web",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Web/bin/Debug/net6.0/Web.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Web",
+            "stopAtEntry": false,
+            // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+            "logging": {
+                "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "01-plain",
+                "order": 3
+            }
+        },
+        {
+            // Use IntelliSense to find out which attributes exist for C# debugging
+            // Use hover for the description of the existing attributes
+            // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+            "name": "LottoService",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-LottoService",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/LottoService/bin/Debug/net6.0/LottoService.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/LottoService",
+            "stopAtEntry": false,
+            // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+            "logging": {
+                "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "01-plain",
+                "order": 2
+            }
+        },
+        {
+            // Use IntelliSense to find out which attributes exist for C# debugging
+            // Use hover for the description of the existing attributes
+            // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+            "name": "RandomNumberService",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-RandomNumberService",
-            "program": "${workspaceFolder}/src/RandomNumberService/bin/Debug/net5.0/RandomNumberService.dll",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/RandomNumberService/bin/Debug/net6.0/RandomNumberService.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/RandomNumberService",
+            "stopAtEntry": false,
+            // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+            "logging": {
+                "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "01-plain",
+                "order": 1
+            }
+        },
+        {
+            "applicationName": "lotto-microservices",
+            "name": "Debug with Tye",
+            "preLaunchTask": "tye-run",
+            "request": "launch",
+            "type": "tye",
+            "watch": true,
+            "presentation": {
+                "hidden": false,
+                "group": "03-tye",
+                "order": 1
+            }
+        },
+        // {
+        //     "applicationName": "lotto-microservices",
+        //     "name": "Debug with Tye (Docker)",
+        //     "preLaunchTask": "tye-run-docker",
+        //     "request": "launch",
+        //     "type": "tye",
+        //     "watch": true,
+        //     "presentation": {
+        //         "hidden": false,
+        //         "group": "03-tye",
+        //         "order": 2
+        //     }
+        // },
+        {
+            "applicationName": "lotto-microservices",
+            "name": "Debug with Tye (Redis)",
+            "preLaunchTask": "tye-run-redis",
+            "request": "launch",
+            "type": "tye",
+            "watch": true,
+            "presentation": {
+                "hidden": false,
+                "group": "03-tye",
+                "order": 3
+            }
+        },
+        {
+            "name": "RandomNumberService with Dapr",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "dapr-debug-RandomNumberService",
+            "postDebugTask": "daprd-down-RandomNumberService",
+            "program": "${workspaceFolder}/src/RandomNumberService/bin/Debug/net6.0/RandomNumberService.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/RandomNumberService",
             "stopAtEntry": false,
@@ -19,14 +158,23 @@
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
+            },
+            "logging": {
+                "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "04-dapr",
+                "order": 1
             }
         },
         {
-            "name": "LottoService - .NET Core Launch",
+            "name": "LottoService with Dapr",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build-LottoService",
-            "program": "${workspaceFolder}/src/LottoService/bin/Debug/net5.0/LottoService.dll",
+            "preLaunchTask": "dapr-debug-LottoService",
+            "postDebugTask": "daprd-down-LottoService",
+            "program": "${workspaceFolder}/src/LottoService/bin/Debug/net6.0/LottoService.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/LottoService",
             "stopAtEntry": false,
@@ -35,18 +183,30 @@
                 "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
             },
             "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                // Update configuration for dapr development
+                "Dapr__Enabled": "true",
+                "Redis__Enabled": "true"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
+            },
+            "logging": {
+                "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "04-dapr",
+                "order": 2
             }
         },
         {
-            "name": "Web - .NET Core Launch",
+            "name": "Web with Dapr",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build-Web",
-            "program": "${workspaceFolder}/src/Web/bin/Debug/net5.0/Web.dll",
+            "preLaunchTask": "dapr-debug-Web",
+            "postDebugTask": "daprd-down-Web",
+            "program": "${workspaceFolder}/src/Web/bin/Debug/net6.0/Web.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/Web",
             "stopAtEntry": false,
@@ -55,16 +215,227 @@
                 "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
             },
             "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                // Update configuration for dapr development
+                "Dapr__Enabled": "true"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
+            },
+            "logging": {
+                "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "04-dapr",
+                "order": 3
+            }
+        },
+        {
+            "applicationName": "lotto-microservices",
+            "name": "Debug with Tye and Dapr",
+            "preLaunchTask": "tye-run-dapr",
+            "request": "launch",
+            "type": "tye",
+            "watch": true,
+            "presentation": {
+                "hidden": false,
+                "group": "05-tye-dapr",
+                "order": 1
+            }
+        },
+        {
+            "name": "RandomNumberService with Kubernetes (docker-desktop)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "bridge-to-kubernetes-docker-desktop-RandomNumberService.compound",
+            "program": "${workspaceFolder}/src/RandomNumberService/bin/Debug/net6.0/RandomNumberService.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/RandomNumberService",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://+:5000"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+            "logging": {
+                "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "06-bridge-to-k8s-docker-desktop",
+                "order": 1
+            }
+        },
+        {
+            
+            "name": "LottoService with Kubernetes (docker-desktop)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "bridge-to-kubernetes-docker-desktop-LottoService.compound",
+            "program": "${workspaceFolder}/src/LottoService/bin/Debug/net6.0/LottoService.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/LottoService",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://+:5002"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+            "logging": {
+                "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "06-bridge-to-k8s-docker-desktop",
+                "order": 2
+            }
+        },
+        {
+            "name": "Web with Kubernetes (docker-desktop)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "bridge-to-kubernetes-docker-desktop-Web.compound",
+            "program": "${workspaceFolder}/src/Web/bin/Debug/net6.0/Web.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Web",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://+:5004"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+            "logging": {
+                "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "06-bridge-to-k8s-docker-desktop",
+                "order": 3
+            }
+        },
+        //
+        {
+            "name": "RandomNumberService with Kubernetes (AKS)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "bridge-to-kubernetes-aks-dli-basta2022-RandomNumberService.compound",
+            "program": "${workspaceFolder}/src/RandomNumberService/bin/Debug/net6.0/RandomNumberService.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/RandomNumberService",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://+:5000"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+            "logging": {
+                "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "07-bridge-to-k8s-aks",
+                "order": 1
+            }
+        },
+        {
+            
+            "name": "LottoService with Kubernetes (AKS)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "bridge-to-kubernetes-aks-dli-basta2022-LottoService.compound",
+            "program": "${workspaceFolder}/src/LottoService/bin/Debug/net6.0/LottoService.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/LottoService",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://+:5002"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+            "logging": {
+                "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "07-bridge-to-k8s-aks",
+                "order": 2
+            }
+        },
+        {
+            "name": "Web with Kubernetes (AKS)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "bridge-to-kubernetes-aks-dli-basta2022-Web.compound",
+            "program": "${workspaceFolder}/src/Web/bin/Debug/net6.0/Web.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Web",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://+:5004"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+            "logging": {
+                "moduleLoad": false
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "07-bridge-to-k8s-aks",
+                "order": 3
             }
         },
         {
             "name": ".NET Core Attach",
             "type": "coreclr",
-            "request": "attach"
+            "request": "attach",
+            "presentation": {
+                "hidden": false,
+                "group": "50-attach",
+                "order": 1
+            }
+        }
+    ],
+    "compounds": [
+        {
+            "name": "All projects (RandomNumberService + LottoService + Web)",
+            "configurations": [
+                "RandomNumberService",
+                "LottoService",
+                "Web"
+            ],
+            "stopAll": true,
+            "presentation": {
+                "hidden": false,
+                "group": "01-plain",
+                "order": 4
+            }
+        },
+        {
+            "name": "All projects with Dapr (RandomNumberService + LottoService + Web)",
+            "configurations": [
+                "RandomNumberService with Dapr",
+                "LottoService with Dapr",
+                "Web with Dapr"
+            ],
+            "stopAll": true,
+            "presentation": {
+                "hidden": false,
+                "group": "04-dapr",
+                "order": 4
+            }
         }
     ]
 }

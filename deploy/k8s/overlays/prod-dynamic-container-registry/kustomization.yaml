@@ -1,0 +1,17 @@
+resources:
+- ../../base
+
+# use this approach, if you want to use an Azure DevOps pipeline
+# replace container registry with pipeline variable
+# requires extensions: https://marketplace.visualstudio.com/items?itemName=qetza.replacetokens
+
+images:
+- name: dlindemann/lottoservice
+  newName: #{containerRegistry}#/dlindemann/lottoservice
+  newTag: 1.0.0
+- name: dlindemann/randomnumberservice
+  newName: #{containerRegistry}#/dlindemann/lottoservice
+  newTag: 1.0.0
+- name: dlindemann/lottoweb
+  newName: #{containerRegistry}#/dlindemann/lottoservice
+  newTag: 1.0.0

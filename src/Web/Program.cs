@@ -1,26 +1,45 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using LottoService.Extensions;
 
-namespace Web
-{
-    public class Program
+using Web.Config;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddOptions<LottoServiceConfig>()
+    .Bind(builder.Configuration.GetSection("LottoService"))
+    .PostConfigure((LottoServiceConfig lottoServiceConfig) =>
     {
-        public static void Main(string[] args)
+        // check if type is enabled and get service url
+        if (builder.Configuration.IsTye())
         {
-            CreateHostBuilder(args).Build().Run();
+            lottoServiceConfig.Url = (builder.Configuration.GetServiceUri("lottoservice")?.ToString() ?? lottoServiceConfig.Url)?.TrimEnd('/');
         }
+    });
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
-}
+// add dapr if enabled
+builder.Services.Configure<DaprConfig>(builder.Configuration.GetSection("Dapr"));
+builder.Services.AddDaprClient();   // always enable dapr client
+
+builder.Services.AddControllersWithViews();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+// if (!app.Environment.IsDevelopment())
+// {
+//     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+//     app.UseHsts();
+// }
+
+// do not use https - networking assumptions are not the job of the program
+// app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller}/{action=Index}/{id?}");
+
+app.MapFallbackToFile("index.html");
+
+app.Run();

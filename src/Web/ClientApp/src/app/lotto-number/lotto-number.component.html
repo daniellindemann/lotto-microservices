@@ -1,0 +1,39 @@
+<h1>Lotto Number</h1>
+
+<p>This can be your winning numbers</p>
+
+<ng-container *ngIf="lottoField && !lottoField?.superNumber">
+  <div class="alert alert-danger" role="alert">
+    Unable to load lotto number
+  </div>
+</ng-container>
+
+<div class="numbers-container">
+  <div class="head">Numbers</div>
+  <div class="numbers">
+    <div *ngIf="!lottoField">&nbsp;</div>
+    <div *ngFor="let number of lottoField?.numbers">{{number | leadingZero}}</div>
+  </div>
+  <div class="head">Super Number</div>
+  <div class="numbers">
+    <div *ngIf="!lottoField">&nbsp;</div>
+    <div>{{lottoField?.superNumber || 0 | leadingZero}}</div>
+  </div>
+</div>
+
+<div class="actions-container">
+  <button class="btn btn-primary" (click)="reload()">Reload</button>
+</div>
+
+<div class="cache-container">
+  <div class="head">History</div>
+  <div class="numbers" *ngIf="lottoFieldHistory && lottoFieldHistory.length > 0">
+    <div *ngFor="let lottoField of lottoFieldHistory">
+      <span *ngFor="let number of lottoField.numbers">{{number | leadingZero}}&nbsp;&nbsp;</span>
+      <span>&dash;&nbsp;&nbsp;{{lottoField.superNumber | leadingZero}}</span>
+    </div>
+  </div>
+  <div class="numbers" *ngIf="!lottoFieldHistory || lottoFieldHistory.length == 0">
+    <div>No history available</div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: random-number-service
+  name: random-number-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: random-number-service
+  template:
+    metadata:
+      labels:
+        app: random-number-service
+    spec:
+      containers:
+      - image: dlindemann/randomnumberservice:1.0.0
+        imagePullPolicy: Always
+        name: randomnumberservice
+        ports:
+        - containerPort: 5000
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "32Mi"
+          limits:
+            cpu: "250m"
+            memory: "256Mi"
+        env:
+        - name: ASPNETCORE_URLS
+          value: http://+:5000

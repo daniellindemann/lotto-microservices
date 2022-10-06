@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: lotto-service
+  name: lotto-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 5000
+    name: http
+    $patch: delete
+  - port: 8081
+    protocol: TCP
+    targetPort: 5000
+    name: http
+  selector:
+    app: lotto-service

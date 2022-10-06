@@ -5,7 +5,7 @@ metadata:
     app: web
   name: web
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: web
@@ -15,7 +15,8 @@ spec:
         app: web
     spec:
       containers:
-      - image: dlindemann/lottoweb
+      - image: dlindemann/lottoweb:1.0.0
+        imagePullPolicy: Always
         name: lottoweb
         ports:
         - containerPort: 5000
@@ -27,5 +28,7 @@ spec:
             cpu: "250m"
             memory: "256Mi"
         env:
-        - name: Api
+        - name: ASPNETCORE_URLS
+          value: http://+:5000
+        - name: LottoService__Url
           value: http://lotto-service:8080

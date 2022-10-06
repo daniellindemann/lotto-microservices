@@ -5,7 +5,7 @@ metadata:
     app: lotto-service
   name: lotto-service
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: lotto-service
@@ -15,7 +15,8 @@ spec:
         app: lotto-service
     spec:
       containers:
-      - image: dlindemann/lottoservice
+      - image: dlindemann/lottoservice:1.0.0
+        imagePullPolicy: Always
         name: lottoservice
         ports:
         - containerPort: 5000
@@ -27,5 +28,7 @@ spec:
             cpu: "250m"
             memory: "256Mi"
         env:
+        - name: ASPNETCORE_URLS
+          value: http://+:5000
         - name: RandomNumberService__Url
           value: http://random-number-service:8080

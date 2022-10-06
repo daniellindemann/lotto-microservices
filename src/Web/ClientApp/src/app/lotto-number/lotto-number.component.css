@@ -1,0 +1,34 @@
+.numbers-container,
+.actions-container,
+.cache-container {
+  padding: 24px 0
+}
+
+.numbers-container>div,
+.cache-container>div {
+  display: flex;
+  justify-content: center;
+}
+
+.numbers-container .head {
+  font-size: 32px;
+}
+
+.numbers-container .numbers>div {
+  display: inline;
+  font-size: 48px;
+  font-weight: bold;
+  margin: 8px;
+  padding: 8px;
+}
+
+.actions-container>.btn {
+  display: block;
+  margin: 0 auto;
+}
+
+.cache-container .numbers {
+  padding: 8px 0;
+  flex-direction: column;
+  align-items: center;
+}

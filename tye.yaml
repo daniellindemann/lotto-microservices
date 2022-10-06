@@ -4,99 +4,14 @@
 # when you've given us a try, we'd love to know what you think:
 #    https://aka.ms/AA7q20u
 #
-# define global settings here
-name: lotto-service # application name
-# registry: exampleuser # dockerhub username or container registry hostname
-
-# define multiple services here
+name: lotto-microservices
 services:
-- name: RandomNumberService
-  project: src/RandomNumberService/RandomNumberService.csproj
-  bindings:
-  - name: http
-    port: 5000
-    protocol: http
-  - name: https
-    port: 5001
-    protocol: https
-- name: LottoService
-  project: src/LottoService/LottoService.csproj
-  env:
-  - name: RandomNumberService__Url
-    value: http://localhost:5000/
-  bindings:
-  - name: http
-    port: 5002
-    protocol: http
-  - name: https
-    port: 5003
-    protocol: https
-- name: Web
+- name: web
   project: src/Web/Web.csproj
   env:
-  - name: Api
-    value: http://localhost:5002
-  bindings:
-  - name: http
-    port: 5004
-    protocol: http
-  - name: https
-    port: 5005
-    protocol: https
-- name: redis
-  image: redis
-  bindings:
-  - port: 6379
-    connectionString: "${host}:${port}"
-- name: seq
-  image: datalust/seq
-  bindings:
-  - name: trace
-    port: 5341
-  - name: web
-    port: 8181
-    containerPort: 80
-  env:
-  - name: "ACCEPT_EULA"
-    value: "Y"
-  - name: "SEQ_FIRSTRUN_ADMINPASSWORDHASH"
-    value: "FOoLKaSS397/a51nyq1E6SLYqNFiahTpRN8+dem1EpRA60X2KQ==" # password
-  volumes:
-  - name: lotto-seq-data-vol
-    target: /data
-    source: .docker-data/seq
-- name: jaeger
-  image: jaegertracing/all-in-one
-  bindings:
-  - name: zipkin_thrift
-    port: 5775
-    protocol: udp
-  - name: thrift_compact
-    port: 6831
-    protocol: udp
-  - name: thrift_binary
-    port: 6832
-    protocol: udp
-  - name: configs
-    port: 5778
-  - name: web
-    port: 16686
-  - name: thrift
-    port: 14268
-  - name: proto
-    port: 14250
-  - name: collector
-    port: 9411
-  env:
-  - name: "COLLECTOR_ZIPKIN_HOST_PORT"
-    value: ":9411"
-
-  # project: app.csproj # msbuild project path (relative to this file)
-  # executable: app.exe # path to an executable (relative to this file)
-  # args: --arg1=3 # arguments to pass to the process
-  # replicas: 5 # number of times to launch the application
-  # env: # array of environment variables
-  #  - name: key
-  #    value: value
-  # bindings: # optional array of bindings (ports, connection strings)
-    # - port: 8080 # number port of the binding
+    - name: ASPNETCORE_HOSTINGSTARTUPASSEMBLIES
+      value: Microsoft.AspNetCore.SpaProxy
+- name: randomnumberservice
+  project: src/RandomNumberService/RandomNumberService.csproj
+- name: lottoservice
+  project: src/LottoService/LottoService.csproj

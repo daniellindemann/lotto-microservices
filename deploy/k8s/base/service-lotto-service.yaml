@@ -5,9 +5,11 @@ metadata:
     app: lotto-service
   name: lotto-service
 spec:
+  type: ClusterIP
   ports:
   - port: 8080
     protocol: TCP
     targetPort: 5000
+    name: http
   selector:
     app: lotto-service

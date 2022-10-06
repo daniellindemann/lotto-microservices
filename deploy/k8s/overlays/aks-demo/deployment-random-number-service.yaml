@@ -1,8 +1,0 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: random-number-service
-  name: random-number-service
-spec:
-  replicas: 2

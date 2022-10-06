@@ -1,0 +1,313 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build-Web",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/Web/Web.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish-Web",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/src/Web/Web.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch-Web",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/src/Web/Web.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build-LottoService",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/LottoService/LottoService.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish-LottoService",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/src/LottoService/LottoService.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch-LottoService",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/src/LottoService/LottoService.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build-RandomNumberService",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/RandomNumberService/RandomNumberService.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish-RandomNumberService",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/src/RandomNumberService/RandomNumberService.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch-RandomNumberService",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/src/RandomNumberService/RandomNumberService.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "tye-run",
+            "type": "tye-run",
+            "watch": true
+        },
+        {
+            "label": "tye-run-docker",
+            "type": "tye-run",
+            "watch": true,
+            "docker": true
+        },
+        {
+            "label": "tye-run-redis",
+            "type": "tye-run",
+            "watch": true,
+            "path": "tye.redis.yaml"
+        },
+        {
+            "appId": "randomnumberservice",
+            "appPort": 5000,
+            "httpPort": 3500,
+            "grpcPort": 50001,
+            "appSsl": false,
+            "appProtocol": "http",
+            "label": "dapr-debug-RandomNumberService",
+            "type": "dapr",
+            "dependsOn": "build-RandomNumberService",
+            "componentsPath": "dapr/components"
+        },
+        {
+            "appId": "randomnumberservice",
+            "label": "daprd-down-RandomNumberService",
+            "type": "daprd-down"
+        },
+        {
+            "appId": "lottoservice",
+            "appPort": 5002,
+            "httpPort": 3501,
+            "grpcPort": 50002,
+            "appSsl": false,
+            "appProtocol": "http",
+            "label": "dapr-debug-LottoService",
+            "type": "dapr",
+            "dependsOn": "build-LottoService",
+            "componentsPath": "dapr/components"
+        },
+        {
+            "appId": "lottoservice",
+            "label": "daprd-down-LottoService",
+            "type": "daprd-down"
+        },
+        {
+            "appId": "web",
+            "appPort": 5004,
+            "httpPort": 3502,
+            "grpcPort": 50003,
+            "appSsl": false,
+            "appProtocol": "http",
+            "label": "dapr-debug-Web",
+            "type": "dapr",
+            "dependsOn": "build-Web",
+            "componentsPath": "dapr/components"
+        },
+        {
+            "appId": "web",
+            "label": "daprd-down-Web",
+            "type": "daprd-down"
+        },
+        {
+            "label": "tye-run-dapr",
+            "type": "tye-run",
+            "watch": true,
+            "path": "tye.dapr.yaml"
+        },
+        // bridge to docker-desktop
+        // cluster: docker-desktop
+        // namespace: default
+        {
+            "label": "bridge-to-kubernetes-docker-desktop-RandomNumberService",
+            "type": "bridge-to-kubernetes.resource",
+            "resource": "random-number-service",
+            "resourceType": "service",
+            "ports": [
+                5000
+            ],
+            "targetCluster": "docker-desktop",
+            "targetNamespace": "default",
+            "useKubernetesServiceEnvironmentVariables": true
+        },
+        {
+            "label": "bridge-to-kubernetes-docker-desktop-RandomNumberService.compound",
+            "dependsOn": [
+                "bridge-to-kubernetes-docker-desktop-RandomNumberService",
+                "build-RandomNumberService"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "bridge-to-kubernetes-docker-desktop-LottoService",
+            "type": "bridge-to-kubernetes.resource",
+            "resource": "lotto-service",
+            "resourceType": "service",
+            "ports": [
+                5002
+            ],
+            "targetCluster": "docker-desktop",
+            "targetNamespace": "default",
+            "useKubernetesServiceEnvironmentVariables": true
+        },
+        {
+            "label": "bridge-to-kubernetes-docker-desktop-LottoService.compound",
+            "dependsOn": [
+                "bridge-to-kubernetes-docker-desktop-LottoService",
+                "build-LottoService"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "bridge-to-kubernetes-docker-desktop-Web",
+            "type": "bridge-to-kubernetes.resource",
+            "resource": "web",
+            "resourceType": "service",
+            "ports": [
+                5002
+            ],
+            "targetCluster": "docker-desktop",
+            "targetNamespace": "default",
+            "useKubernetesServiceEnvironmentVariables": true
+        },
+        {
+            "label": "bridge-to-kubernetes-docker-desktop-Web.compound",
+            "dependsOn": [
+                "bridge-to-kubernetes-docker-desktop-Web",
+                "build-Web"
+            ],
+            "dependsOrder": "sequence"
+        },
+        // bridge to kubernetes aks
+        // cluster: aks-dli-basta2022
+        // namespace: default
+        {
+            "label": "bridge-to-kubernetes-aks-dli-basta2022-RandomNumberService",
+            "type": "bridge-to-kubernetes.resource",
+            "resource": "random-number-service",
+            "resourceType": "service",
+            "ports": [
+                5000
+            ],
+            "targetCluster": "aks-dli-basta2022",
+            "targetNamespace": "default",
+            "useKubernetesServiceEnvironmentVariables": true
+        },
+        {
+            "label": "bridge-to-kubernetes-aks-dli-basta2022-RandomNumberService.compound",
+            "dependsOn": [
+                "bridge-to-kubernetes-aks-dli-basta2022-RandomNumberService",
+                "build-RandomNumberService"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "bridge-to-kubernetes-aks-dli-basta2022-LottoService",
+            "type": "bridge-to-kubernetes.resource",
+            "resource": "lotto-service",
+            "resourceType": "service",
+            "ports": [
+                5002
+            ],
+            "targetCluster": "aks-dli-basta2022",
+            "targetNamespace": "default",
+            "useKubernetesServiceEnvironmentVariables": true
+        },
+        {
+            "label": "bridge-to-kubernetes-aks-dli-basta2022-LottoService.compound",
+            "dependsOn": [
+                "bridge-to-kubernetes-aks-dli-basta2022-LottoService",
+                "build-LottoService"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "bridge-to-kubernetes-aks-dli-basta2022-Web",
+            "type": "bridge-to-kubernetes.resource",
+            "resource": "web",
+            "resourceType": "service",
+            "ports": [
+                5002
+            ],
+            "targetCluster": "aks-dli-basta2022",
+            "targetNamespace": "default",
+            "useKubernetesServiceEnvironmentVariables": true
+        },
+        {
+            "label": "bridge-to-kubernetes-aks-dli-basta2022-Web.compound",
+            "dependsOn": [
+                "bridge-to-kubernetes-aks-dli-basta2022-Web",
+                "build-Web"
+            ],
+            "dependsOrder": "sequence"
+        }
+    ]
+}

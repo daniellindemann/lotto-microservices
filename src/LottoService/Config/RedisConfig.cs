@@ -1,7 +1,8 @@
-﻿namespace LottoService.Config
+public class RedisConfig
 {
-    public class RedisConfig
-    {
-        public string HostName { get; set; }
-    }
+    public static readonly string ConnectionStringName = "Redis";
+
+    public bool Enabled { get; set; }
+    public string? Instance { get; set; }
+    public string? DaprStoreId { get; set; }
 }

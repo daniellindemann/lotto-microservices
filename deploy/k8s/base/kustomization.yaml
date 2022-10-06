@@ -1,10 +1,17 @@
-namespace: lotto
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: arbitrary
+
+# Example configuration for the webserver
+# at https://github.com/monopole/hello
+commonLabels:
+  project: lotto-microservices
+
 resources:
-- namespace-lotto.yaml
 - deployment-lotto-service.yaml
 - deployment-random-number-service.yaml
 - deployment-web.yaml
-- ingress-web.yaml
 - service-lotto-service.yaml
 - service-random-number-service.yaml
 - service-web.yaml

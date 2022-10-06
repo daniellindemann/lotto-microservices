@@ -1,51 +1,59 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LottoService.Application.Common.Interfaces;
-using LottoService.Application.LottoField.Models;
-using LottoService.Application.LottoField.Queries.GetHistory;
-using LottoService.Application.LottoField.Queries.GetLottoField;
-using LottoService.Infrastructure.Persistence;
+using LottoService.Application.Interfaces;
+using LottoService.Models.Responses;
+
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
-namespace LottoService.Controllers
+namespace LottoService.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class LottoNumberController : ControllerBase
 {
-    public class LottoNumberController : ApiControllerBase
+    private readonly ILottoNumberService _lottoNumberService;
+    private readonly ILogger<LottoNumberController> _logger;
+
+    public LottoNumberController(ILottoNumberService lottoNumberService,
+        ILogger<LottoNumberController> logger)
     {
-        private readonly ILogger<LottoNumberController> _logger;
+        _lottoNumberService = lottoNumberService;
+        _logger = logger;
+    }
 
-        public LottoNumberController(ILogger<LottoNumberController> logger)
+    [HttpGet]
+    public async Task<LottoFieldResponse> Get()
+    {
+        _logger.LogInformation("Retrieved get request");
+
+        _logger.LogTrace("Calling lotto number service");
+        var lottoField = await _lottoNumberService.Draw();
+        _logger.LogTrace("Got lotto numbers @{lottoNumbers}", lottoField);
+
+        // create custom response object
+        var response = new LottoFieldResponse()
         {
-            _logger = logger;
-        }
+            Numbers = lottoField.Numbers,
+            SuperNumber = lottoField.SuperNumber
+        };
 
-        [HttpGet]
-        public async Task<LottoFieldDto> Get()
+        return response;
+    }
+
+    [HttpGet("history")]
+    public async Task<List<LottoFieldResponse>?> GetHistory()
+    {
+        _logger.LogInformation("Retrieved get request");
+
+        _logger.LogTrace("Calling lotto number service to retrieve history");
+        var lottoField = await _lottoNumberService.GetHistory();
+        _logger.LogTrace("Got lotto numbers history @{lottoNumbers}", lottoField);
+
+        // create custom response object
+        var response = lottoField?.Select(lf => new LottoFieldResponse()
         {
-            _logger.LogInformation("Retrieved get request");
+            Numbers = lf.Numbers,
+            SuperNumber = lf.SuperNumber
+        }).ToList();
 
-            _logger.LogTrace("Creating mediator request");
-            var mediatorRequest = new GetLottoFieldQuery();
-            _logger.LogTrace("Created {name} request", nameof(GetLottoFieldQuery));
-
-            var data = await Mediator.Send(mediatorRequest);
-            _logger.LogInformation("Lotto data is {@lottoData}", data);
-            return data;
-        }
-
-        [HttpGet("history")]
-        public async Task<IEnumerable<LottoFieldDto>> GetHistory()
-        {
-            _logger.LogInformation("Retrieved get history request");
-
-            _logger.LogTrace("Creating mediator request");
-            var mediatorRequest = new GetHistoryQuery();
-            _logger.LogTrace("Created {name} request", nameof(GetLottoFieldQuery));
-
-            var data = await Mediator.Send(mediatorRequest);
-            _logger.LogInformation("History data is {@historyData}", data);
-            return data;
-        }
+        return response;
     }
 }

@@ -1,11 +1,15 @@
 resources:
 - ../../base
-# - ingress-web.yaml
-# - ingress-lotto-service.yaml
+- configmap-web.yaml
+- ingress-web.yaml
+- ingress-lotto-service.yaml
 
 commonLabels:
   environment: prod
   hosted-on: azure
+
+patchesStrategicMerge:
+- deployment-web.yaml
 
 # container registry will not be available after basta 2022
 # recreate it, if required

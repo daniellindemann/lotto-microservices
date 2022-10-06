@@ -16,8 +16,7 @@
 		}
 	},
     "runArgs": [
-        "--network=host"	// TODO: is this good on windows and wsl??
-		// OR docker on docker better?
+        "--network=host"    // use the host network
     ],
 
 	// Configure tool-specific properties.
@@ -79,14 +78,15 @@
 	//    * If only using Remote - Containers with a local container, uncomment this line instead:
 	//      "mounts": [ "source=${env:HOME}${env:USERPROFILE}/.aspnet/https,target=/home/vscode/.aspnet/https,type=bind" ],
 	"mounts": [
+        // pass dev certs to the dev container
         "source=${env:HOME}${env:USERPROFILE}/.aspnet/https,target=/home/vscode/.aspnet/https,type=bind",
+        // passing kubeconfig to the dev container
         "source=${localEnv:HOME}${localEnv:USERPROFILE}/.kube,target=/home/vscode/.kube,type=bind,consistency=cached"
     ],
 	"remoteEnv": {
 		// set environment variables from host
 		"ASPNETCORE_Kestrel__Certificates__Default__Path": "/home/vscode/.aspnet/https/aspnetapp.pfx",
 		"ASPNETCORE_Kestrel__Certificates__Default__Password": "${localEnv:ASPNETCORE_Kestrel__Certificates__Default__Password}"
-        //"ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
 	},
 
 	// Use 'postCreateCommand' to run commands after the container is created.
@@ -101,8 +101,8 @@
             "helm": "latest",
             "minikube": "none"
         },
-		"azure-cli": "latest",
-		"powershell": "latest"
+		"azure-cli": "latest"
+		// "powershell": "latest"
         // "golang": "latest"
 	}
 }

@@ -1,0 +1,18 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: lottostatestore-mongo
+spec:
+  type: state.mongodb
+  version: v1
+  metadata:
+  - name: host
+    value: localhost:27017
+  # - name: username
+  #   value: admin
+  # - name: password
+  #   value: password
+  - name: databaseName
+    value: lotto
+  - name: collectionName
+    value: numbers

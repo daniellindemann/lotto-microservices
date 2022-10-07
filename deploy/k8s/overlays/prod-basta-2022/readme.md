@@ -67,8 +67,8 @@
 
 - Domain update
     - im Domain DNS die folgenden A Einträge machen:
-        - <INGRESS_PUBLIC_IP> --> web.lotto.<DOMAIN>
-        - <INGRESS_PUBLIC_IP> --> api.lotto.<DOMAIN>
+        - <INGRESS_PUBLIC_IP> --> web.lotto.<DOMAIN_NAME>
+        - <INGRESS_PUBLIC_IP> --> api.lotto.<DOMAIN_NAME>
 
 ## Environment
 

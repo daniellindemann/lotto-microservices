@@ -33,7 +33,8 @@
                 "ms-kubernetes-tools.vscode-aks-tools",
                 "ms-azuretools.vscode-dapr",
                 "redhat.vscode-yaml",
-                "mindaro.mindaro"
+                "mindaro.mindaro",
+                "mongodb.mongodb-vscode"
 			],
             "settings": {
                 "[csharp]": {

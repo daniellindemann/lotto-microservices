@@ -22,9 +22,9 @@ public class RedisCacheService<T> : AbstractRedisCacheService, ICacheService<T> 
         _logger = logger;
     }
 
-    public async Task<T?> Get(string key)
+    public async Task<T?> GetAsync(string key)
     {
-        var json = await GetString(key);
+        var json = await GetStringAsync(key);
         if (json == null)
             return null;
 
@@ -35,12 +35,12 @@ public class RedisCacheService<T> : AbstractRedisCacheService, ICacheService<T> 
         return obj;
     }
 
-    public async Task Set(string key, T? value)
+    public async Task SetAsync(string key, T? value)
     {
         if (value == null)
             return;
 
         var json = JsonSerializer.Serialize<T>(value);
-        await SetString(key, json);
+        await SetStringAsync(key, json);
     }
 }

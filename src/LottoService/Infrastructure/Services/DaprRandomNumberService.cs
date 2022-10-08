@@ -23,7 +23,7 @@ public class DaprRandomNumberService : IRandomNumberService
         _logger = logger;
     }
 
-    public async Task<int> Generate(int min, int max)
+    public async Task<int> GenerateAsync(int min, int max)
     {
         _logger.LogInformation("Asking random number service for a new number");
 

@@ -15,7 +15,7 @@ public abstract class AbstractRedisCacheService
         _redisConfig = redisConfig.Value;
     }
 
-    public async Task<string?> GetString(string key)
+    public async Task<string?> GetStringAsync(string key)
     {
         if (!_redisConfig.Enabled)
             return null;
@@ -23,7 +23,7 @@ public abstract class AbstractRedisCacheService
         return await _distributedCache.GetStringAsync(key);
     }
 
-    public async Task SetString(string key, string value)
+    public async Task SetStringAsync(string key, string value)
     {
         if (!_redisConfig.Enabled)
             return;

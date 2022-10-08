@@ -20,26 +20,26 @@ public class CachedLottoNumberService : LottoNumberService
         _cacheService = cacheService;
     }
 
-    public override async Task<LottoField> Draw()
+    public override async Task<LottoField> DrawAsync()
     {
-        var lottoField = await base.Draw();
+        var lottoField = await base.DrawAsync();
 
         await UpdateCache(lottoField);
 
         return lottoField;
     }
 
-    public override async Task<List<LottoField>?> GetHistory()
+    public override async Task<List<LottoField>?> GetHistoryAsync()
     {
-        var cachedLottoFields = await _cacheService.Get(CacheKey) ?? null;
+        var cachedLottoFields = await _cacheService.GetAsync(CacheKey) ?? null;
         return cachedLottoFields;
     }
 
     private async Task UpdateCache(LottoField lottoField)
     {
-        var cachedLottoFields = await GetHistory() ?? new List<LottoField>();
+        var cachedLottoFields = await GetHistoryAsync() ?? new List<LottoField>();
         cachedLottoFields?.Insert(0, lottoField);
 
-        await _cacheService.Set(CacheKey, cachedLottoFields?.Take(100).ToList());
+        await _cacheService.SetAsync(CacheKey, cachedLottoFields?.Take(100).ToList());
     }
 }

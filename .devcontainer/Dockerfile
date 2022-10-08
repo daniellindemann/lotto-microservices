@@ -45,7 +45,6 @@ RUN if [ "${K9S_VERSION}" != "none" ]; then \
     curl -O -L "https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_x86_64.tar.gz" \
         && mkdir k9s && tar -zxvf k9s_Linux_x86_64.tar.gz --directory k9s && chmod +x ./k9s/k9s && mv ./k9s/k9s /usr/bin/k9s; \
     fi
-RUN
 
 # install k6 from binary
 ARG K6_VERSION="none"
@@ -53,4 +52,3 @@ RUN if [ "${K6_VERSION}" != "none" ]; then \
     curl -O -L "https://github.com/grafana/k6/releases/download/v${K6_VERSION}/k6-v${K6_VERSION}-linux-amd64.tar.gz" \
         && tar -zxvf k6-v${K6_VERSION}-linux-amd64.tar.gz && chmod +x ./k6-v${K6_VERSION}-linux-amd64/k6 && mv ./k6-v${K6_VERSION}-linux-amd64/k6 /usr/bin/k6; \
     fi
-RUN

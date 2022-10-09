@@ -4,6 +4,6 @@ namespace LottoService.Application.Interfaces;
 
 public interface ILottoNumberService
 {
-    Task<LottoField> Draw();
-    Task<List<LottoField>?> GetHistory();
+    Task<LottoField> DrawAsync();
+    Task<List<LottoField>?> GetHistoryAsync();
 }

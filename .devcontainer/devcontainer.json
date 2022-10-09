@@ -9,10 +9,14 @@
 			// Append -bullseye or -focal to pin to an OS version.
 			"VARIANT": "6.0-bullseye",
 			// Options
+            "ADDITIONAL_APT_PACKAGES": "vim", // space-separated list of apt packages
 			"NODE_VERSION": "16",
 			"ANGULAR_VERSION": "13.3.4",
             "TYE_VERSION": "0.11.0-alpha.22111.1",
-            "DRAFT_VERSION": "0.0.24"
+            "DAPR_VERSION": "latest",   // dapr install script doesn't support specific version dl
+            "DRAFT_VERSION": "0.0.24",
+            "K9S_VERSION": "0.26.6",
+            "K6_VERSION": "0.40.0"
 		}
 	},
     "runArgs": [
@@ -33,7 +37,8 @@
                 "ms-kubernetes-tools.vscode-aks-tools",
                 "ms-azuretools.vscode-dapr",
                 "redhat.vscode-yaml",
-                "mindaro.mindaro"
+                "mindaro.mindaro",
+                "mongodb.mongodb-vscode"
 			],
             "settings": {
                 "[csharp]": {
@@ -102,7 +107,5 @@
             "minikube": "none"
         },
 		"azure-cli": "latest"
-		// "powershell": "latest"
-        // "golang": "latest"
 	}
 }

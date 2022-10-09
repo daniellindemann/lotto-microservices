@@ -34,54 +34,54 @@ public class DaprCachedLottoNumberService : LottoNumberService
         _redisConfig = redisConfig.Value;
     }
 
-    public override async Task<LottoField> Draw()
+    public override async Task<LottoField> DrawAsync()
     {
-        var lottoField = await base.Draw();
+        var lottoField = await base.DrawAsync();
 
         await UpdateCache(lottoField);
 
         return lottoField;
     }
 
-    public override async Task<List<LottoField>?> GetHistory()
+    public override async Task<List<LottoField>?> GetHistoryAsync()
     {
         if (UseHttp)
         {
-            return await GetHistoryHttp();
+            return await GetHistoryHttpAsync();
         }
         else
         {
-            return await GetHistoryDaprClient();
+            return await GetHistoryDaprClientAsync();
         }
     }
 
     private async Task UpdateCache(LottoField lottoField)
     {
-        var cachedLottoFields = await GetHistory() ?? new List<LottoField>();
+        var cachedLottoFields = await GetHistoryAsync() ?? new List<LottoField>();
         cachedLottoFields?.Insert(0, lottoField);
 
         if (UseHttp)
         {
-            await UpdateCacheHttp(cachedLottoFields);
+            await UpdateCacheHttpAsync(cachedLottoFields);
         }
         else
         {
-            await UpdateCacheDaprClient(cachedLottoFields);
+            await UpdateCacheDaprClientAsync(cachedLottoFields);
         }
     }
 
-    private async Task<List<LottoField>?> GetHistoryDaprClient()
+    private async Task<List<LottoField>?> GetHistoryDaprClientAsync()
     {
         var cachedLottoFields = await _daprClient.GetStateAsync<List<LottoField>>(_redisConfig.DaprStoreId, CacheKey);
         return cachedLottoFields;
     }
 
-    private async Task UpdateCacheDaprClient(List<LottoField>? lottoFields)
+    private async Task UpdateCacheDaprClientAsync(List<LottoField>? lottoFields)
     {
         await _daprClient.SaveStateAsync(_redisConfig.DaprStoreId, CacheKey, lottoFields);
     }
 
-    private async Task<List<LottoField>?> GetHistoryHttp()
+    private async Task<List<LottoField>?> GetHistoryHttpAsync()
     {
         var httpClient = _httpClientFactory.CreateClient();
 
@@ -106,7 +106,7 @@ public class DaprCachedLottoNumberService : LottoNumberService
         return cachedLottoFields;
     }
 
-    private async Task UpdateCacheHttp(List<LottoField>? lottoFields)
+    private async Task UpdateCacheHttpAsync(List<LottoField>? lottoFields)
     {
         var httpClient = _httpClientFactory.CreateClient();
 

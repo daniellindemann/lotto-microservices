@@ -60,4 +60,3 @@ public class AppConfigController : ControllerBase
         return requestUri;
     }
 }
-

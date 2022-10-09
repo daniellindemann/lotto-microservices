@@ -1,12 +1,10 @@
-## Draft
+# Draft
+
+<https://draft.sh>
 
 - nicht bevorzugt: draft aufrufen über `az aks draft -h`
     - klappt noch nicht so ganz
 - draft selbst installieren
-    - Voraussetzung: golang
-        ```bash
-        sudo apt install golang-go  # ubuntu style
-        ```
     - draft laden und installieren
         ```bash
         DRAFT_VERSION="0.0.24" # draft version

@@ -21,7 +21,7 @@ public class LottoNumberService : ILottoNumberService
         _appConfig = appConfig.Value;
     }
 
-    public virtual async Task<LottoField> Draw()
+    public virtual async Task<LottoField> DrawAsync()
     {
         _logger.LogInformation("Getting lotto field numbers");
         var lottoCount = _appConfig.NumberOfDraws;
@@ -29,7 +29,7 @@ public class LottoNumberService : ILottoNumberService
         var lottoMax = _appConfig.LottoNumber.Max;
 
         _logger.LogTrace("Asking for {count} numbers between {min} and {max}", lottoCount, lottoMin, lottoMax);
-        var lottoNumbers = await GetUniqueNumbers(lottoMin, lottoMax, lottoCount);
+        var lottoNumbers = await GetUniqueNumbersAsync(lottoMin, lottoMax, lottoCount);
         _logger.LogInformation("Got lotto field data {@lottoNumbers}", lottoNumbers);
 
         _logger.LogInformation("Getting super number");
@@ -37,7 +37,7 @@ public class LottoNumberService : ILottoNumberService
         var superMax = _appConfig.SuperNumber.Max;
 
         _logger.LogTrace("Asking for a number between {min} and {max}", superMin, superMax);
-        var superNumber = await _randomNumberService.Generate(superMin, superMax);
+        var superNumber = await _randomNumberService.GenerateAsync(superMin, superMax);
         _logger.LogInformation("Got super number {superNumber}", superNumber);
 
         var lottoField = new LottoField();
@@ -47,12 +47,12 @@ public class LottoNumberService : ILottoNumberService
         return lottoField;
     }
 
-    public virtual Task<List<LottoField>?> GetHistory()
+    public virtual Task<List<LottoField>?> GetHistoryAsync()
     {
         return Task.FromResult<List<LottoField>?>(null);
     }
 
-    private async Task<IList<int>> GetUniqueNumbers(int min, int max, int count)
+    private async Task<IList<int>> GetUniqueNumbersAsync(int min, int max, int count)
     {
         _logger.LogInformation("Getting {count} unique numbers between {min} and {max}", count, min, max);
         var uniqueNumbersCount = 0;
@@ -63,7 +63,7 @@ public class LottoNumberService : ILottoNumberService
             var lottoNumberTasks = new List<Task<int>>();
             for (int i = 0; i < numberOfRequests; i++)
             {
-                lottoNumberTasks.Add(_randomNumberService.Generate(min, max));
+                lottoNumberTasks.Add(_randomNumberService.GenerateAsync(min, max));
             }
 
             var responseLottoNumbers = await Task.WhenAll(lottoNumberTasks);

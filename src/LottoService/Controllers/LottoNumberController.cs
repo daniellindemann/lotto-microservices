@@ -20,12 +20,12 @@ public class LottoNumberController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<LottoFieldResponse> Get()
+    public async Task<LottoFieldResponse> GetAsync()
     {
         _logger.LogInformation("Retrieved get request");
 
         _logger.LogTrace("Calling lotto number service");
-        var lottoField = await _lottoNumberService.Draw();
+        var lottoField = await _lottoNumberService.DrawAsync();
         _logger.LogTrace("Got lotto numbers @{lottoNumbers}", lottoField);
 
         // create custom response object
@@ -39,12 +39,12 @@ public class LottoNumberController : ControllerBase
     }
 
     [HttpGet("history")]
-    public async Task<List<LottoFieldResponse>?> GetHistory()
+    public async Task<List<LottoFieldResponse>?> GetHistoryAsync()
     {
         _logger.LogInformation("Retrieved get request");
 
         _logger.LogTrace("Calling lotto number service to retrieve history");
-        var lottoField = await _lottoNumberService.GetHistory();
+        var lottoField = await _lottoNumberService.GetHistoryAsync();
         _logger.LogTrace("Got lotto numbers history @{lottoNumbers}", lottoField);
 
         // create custom response object

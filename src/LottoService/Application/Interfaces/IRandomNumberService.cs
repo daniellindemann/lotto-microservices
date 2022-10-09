@@ -2,5 +2,5 @@ namespace LottoService.Application.Interfaces;
 
 public interface IRandomNumberService
 {
-    Task<int> Generate(int min, int max);
+    Task<int> GenerateAsync(int min, int max);
 }

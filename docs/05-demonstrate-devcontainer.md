@@ -1,5 +1,7 @@
 # Dev Container
 
+<https://code.visualstudio.com/docs/remote/containers>
+
 ## Requirements
 
 - Add Dev Container Extension to VS Code
@@ -13,6 +15,11 @@
 
 - Show Dev Container for the project incl. all changes
 - Show video, because it takes up to 6min to setup
+
+## Personalization
+
+- show code settings for customization
+- Install dotfiles
 
 ## Run app
 

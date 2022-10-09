@@ -2,14 +2,7 @@ using LottoService.Application.Interfaces;
 using LottoService.Application.Services;
 using LottoService.Config;
 using LottoService.Infrastructure.Services;
-
-using System.Linq;
-
-using Microsoft.Extensions.Options;
-using System.Collections;
 using LottoService.Extensions;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Caching.StackExchangeRedis;
 
 var builder = WebApplication.CreateBuilder(args);
 

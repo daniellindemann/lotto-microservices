@@ -15,10 +15,12 @@ dotnet dev-certs https --clean --import "$ASPNETCORE_Kestrel__Certificates__Defa
 dapr uninstall --all
 dapr init
 
-# # configure mindaro file downloader
-# curl -O -L "https://bridgetokubernetes.blob.core.windows.net/zip/lks/lpk-linux.zip" \
-#     && mkdir -p ${HOME}/.config/Code/User/globalStorage/mindaro.mindaro/file-downloader-downloads/binaries \
-#     && unzip lpk-linux.zip -d ${HOME}/.config/Code/User/globalStorage/mindaro.mindaro/file-downloader-downloads/binaries \
-#     && chmod +x ${HOME}/.config/Code/User/globalStorage/mindaro.mindaro/file-downloader-downloads/binaries/dsc \
-#     && chmod +x ${HOME}/.config/Code/User/globalStorage/mindaro.mindaro/file-downloader-downloads/binaries/kubectl/linux/kubectl \
-#     && chmod +x ${HOME}/.config/Code/User/globalStorage/mindaro.mindaro/file-downloader-downloads/binaries/EndpointManager/EndpointManager
+# setup mongo container
+MONGO_CONTAINER_NAME=lotto_mongo
+MONGO_VERSION=6.0.2
+if [ ! "$(docker ps -a | grep $MONGO_CONTAINER_NAME)" ]; then
+    docker run -d --name $MONGO_CONTAINER_NAME -p 27017:27017 mongo:$MONGO_VERSION
+fi
+if [ "$(docker container inspect -f '{{.State.Status}}' $MONGO_CONTAINER_NAME)" != "running" ]; then
+    docker start $MONGO_CONTAINER_NAME
+fi

@@ -11,8 +11,8 @@ RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/
 # [Optional] Uncomment this section to install additional OS packages.
 ARG ADDITIONAL_APT_PACKAGES="none"
 RUN if [ "${ADDITIONAL_APT_PACKAGES}" != "none" ]; then \
-    apt-get update && export DEBIAN_FRONTEND=noninteractive \
-        && apt-get -y install --no-install-recommends $ADDITIONAL_APT_PACKAGES; \
+        apt-get update && export DEBIAN_FRONTEND=noninteractive \
+            && apt-get -y install --no-install-recommends $ADDITIONAL_APT_PACKAGES; \
     fi
 
 # [Optional] Uncomment this line to install global node packages.
@@ -35,20 +35,20 @@ ARG DRAFT_ARCH="amd64"
 ARG DRAFT_PLATFORM="linux"
 # TODO: architecture should be automatically detected for mac users
 RUN if [ "${DRAFT_VERSION}" != "none" ]; then \
-    curl -O -L "https://github.com/Azure/draft/releases/download/v${DRAFT_VERSION}/draft-${DRAFT_PLATFORM}-${DRAFT_ARCH}" \
-        && mv draft-$DRAFT_PLATFORM-$DRAFT_ARCH draft && chmod +x draft && mv draft /usr/bin/draft; \
+        curl -O -L "https://github.com/Azure/draft/releases/download/v${DRAFT_VERSION}/draft-${DRAFT_PLATFORM}-${DRAFT_ARCH}" \
+            && mv draft-$DRAFT_PLATFORM-$DRAFT_ARCH draft && chmod +x draft && mv draft /usr/bin/draft; \
     fi
 
 # install k9s from binary
 ARG K9S_VERSION="none"
 RUN if [ "${K9S_VERSION}" != "none" ]; then \
-    curl -O -L "https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_x86_64.tar.gz" \
-        && mkdir k9s && tar -zxvf k9s_Linux_x86_64.tar.gz --directory k9s && chmod +x ./k9s/k9s && mv ./k9s/k9s /usr/bin/k9s; \
+        curl -O -L "https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_x86_64.tar.gz" \
+            && mkdir k9s && tar -zxvf k9s_Linux_x86_64.tar.gz --directory k9s && chmod +x ./k9s/k9s && mv ./k9s/k9s /usr/bin/k9s; \
     fi
 
 # install k6 from binary
 ARG K6_VERSION="none"
 RUN if [ "${K6_VERSION}" != "none" ]; then \
-    curl -O -L "https://github.com/grafana/k6/releases/download/v${K6_VERSION}/k6-v${K6_VERSION}-linux-amd64.tar.gz" \
-        && tar -zxvf k6-v${K6_VERSION}-linux-amd64.tar.gz && chmod +x ./k6-v${K6_VERSION}-linux-amd64/k6 && mv ./k6-v${K6_VERSION}-linux-amd64/k6 /usr/bin/k6; \
+        curl -O -L "https://github.com/grafana/k6/releases/download/v${K6_VERSION}/k6-v${K6_VERSION}-linux-amd64.tar.gz" \
+            && tar -zxvf k6-v${K6_VERSION}-linux-amd64.tar.gz && chmod +x ./k6-v${K6_VERSION}-linux-amd64/k6 && mv ./k6-v${K6_VERSION}-linux-amd64/k6 /usr/bin/k6; \
     fi

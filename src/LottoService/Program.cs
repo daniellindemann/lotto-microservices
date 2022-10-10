@@ -42,6 +42,7 @@ if (redisConfig.Enabled)
 
     if (daprConfig.Enabled)
     {
+        builder.Services.Configure<DaprConfig>(builder.Configuration.GetSection("Dapr"));
         builder.Services.AddHttpClient<DaprRandomNumberService>();
         builder.Services.AddScoped<ILottoNumberService, DaprCachedLottoNumberService>();
     }

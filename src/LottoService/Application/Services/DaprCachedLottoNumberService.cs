@@ -20,18 +20,18 @@ public class DaprCachedLottoNumberService : LottoNumberService
 
     private readonly DaprClient _daprClient;
     private readonly IHttpClientFactory _httpClientFactory;
-    private readonly RedisConfig _redisConfig;
+    private readonly DaprConfig _daprConfig;
 
     public DaprCachedLottoNumberService(DaprClient daprClient,
         IHttpClientFactory httpClientFactory,
-        IOptions<RedisConfig> redisConfig,
+        IOptions<DaprConfig> daprConfig,
         IRandomNumberService randomNumberService,
         IOptions<AppConfig> appConfig,
         ILogger<DaprCachedLottoNumberService> logger) : base(randomNumberService, appConfig, logger)
     {
         _daprClient = daprClient;
         _httpClientFactory = httpClientFactory;
-        _redisConfig = redisConfig.Value;
+        _daprConfig = daprConfig.Value;
     }
 
     public override async Task<LottoField> DrawAsync()
@@ -72,20 +72,20 @@ public class DaprCachedLottoNumberService : LottoNumberService
 
     private async Task<List<LottoField>?> GetHistoryDaprClientAsync()
     {
-        var cachedLottoFields = await _daprClient.GetStateAsync<List<LottoField>>(_redisConfig.DaprStoreId, CacheKey);
+        var cachedLottoFields = await _daprClient.GetStateAsync<List<LottoField>>(_daprConfig.DaprStoreId, CacheKey);
         return cachedLottoFields;
     }
 
     private async Task UpdateCacheDaprClientAsync(List<LottoField>? lottoFields)
     {
-        await _daprClient.SaveStateAsync(_redisConfig.DaprStoreId, CacheKey, lottoFields);
+        await _daprClient.SaveStateAsync(_daprConfig.DaprStoreId, CacheKey, lottoFields);
     }
 
     private async Task<List<LottoField>?> GetHistoryHttpAsync()
     {
         var httpClient = _httpClientFactory.CreateClient();
 
-        var url = $"http://localhost:3500/v1.0/state/{_redisConfig.DaprStoreId}/{CacheKey}";    // yep, is hardcoded for demo purpose; will not work with tye and dapr config
+        var url = $"http://localhost:3500/v1.0/state/{_daprConfig.DaprStoreId}/{CacheKey}";    // yep, is hardcoded for demo purpose; will not work with tye and dapr config
         var request = new HttpRequestMessage()
         {
             Headers =
@@ -110,7 +110,7 @@ public class DaprCachedLottoNumberService : LottoNumberService
     {
         var httpClient = _httpClientFactory.CreateClient();
 
-        var url = $"http://localhost:3500/v1.0/state/{_redisConfig.DaprStoreId}";    // yep, url is hardcoded for demo purpose; will not work with tye and dapr config
+        var url = $"http://localhost:3500/v1.0/state/{_daprConfig.DaprStoreId}";    // yep, url is hardcoded for demo purpose; will not work with tye and dapr config
         var request = new HttpRequestMessage()
         {
             Headers =

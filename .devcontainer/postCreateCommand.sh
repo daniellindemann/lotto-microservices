@@ -16,11 +16,11 @@ dapr uninstall --all
 dapr init
 
 # setup mongo container
-MONGO_CONTAINER_NAME=mongo
+MONGO_CONTAINER_NAME=lotto_mongo
 MONGO_VERSION=6.0.2
 if [ ! "$(docker ps -a | grep $MONGO_CONTAINER_NAME)" ]; then
-    docker run -d --name mongo -p 27017:27017 mongo:$MONGO_VERSION
+    docker run -d --name $MONGO_CONTAINER_NAME -p 27017:27017 mongo:$MONGO_VERSION
 fi
 if [ "$(docker container inspect -f '{{.State.Status}}' $MONGO_CONTAINER_NAME)" != "running" ]; then
-    docker start mongo
+    docker start $MONGO_CONTAINER_NAME
 fi

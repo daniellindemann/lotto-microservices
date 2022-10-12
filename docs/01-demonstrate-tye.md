@@ -31,6 +31,7 @@
         - See all running applications
         - See restarts
         - See logs
+    - Show in `Program.cs` in LottoService
 - Code Extension
     - Don't waste time in the terminal
     - https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-tye

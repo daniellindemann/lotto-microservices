@@ -4,4 +4,5 @@ public class LottoServiceConfig
 {
     public string? Url { get; set; }
     public string? DaprAppId { get;set; } = "lottoservice";
+    public bool UseLottoServiceCallViaBackend { get; set; }
 }

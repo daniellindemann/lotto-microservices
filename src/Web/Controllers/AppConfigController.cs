@@ -31,8 +31,14 @@ public class AppConfigController : ControllerBase
     [HttpGet("get")]
     public AppConfigResponse GetConfig()
     {
-        var variables = Environment.GetEnvironmentVariables();
-
+        if (_lottoServiceConfig.UseLottoServiceCallViaBackend)
+        {
+            return new AppConfigResponse()
+            {
+                LottoService = new LottoServiceConfigResponse() { Url = $"{Request.Scheme}://{Request.Host}" }
+            };
+        }
+        
         var daprRequestUri = ReplaceHomeAddressWithLocalhost(_daprClient.CreateInvokeMethodRequest(_lottoServiceConfig.DaprAppId, string.Empty)?.RequestUri);
         return new AppConfigResponse()
         {

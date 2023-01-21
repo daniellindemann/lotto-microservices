@@ -1,6 +1,8 @@
 using LottoService.Extensions;
 
+using Web.Application.Interfaces;
 using Web.Config;
+using Web.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,9 @@ builder.Services.AddOptions<LottoServiceConfig>()
 // add dapr if enabled
 builder.Services.Configure<DaprConfig>(builder.Configuration.GetSection("Dapr"));
 builder.Services.AddDaprClient();   // always enable dapr client
+
+builder.Services.AddHttpClient<ILottoNumberService, ILottoNumberService>();
+builder.Services.AddScoped<ILottoNumberService, LottoNumberService>();
 
 builder.Services.AddControllersWithViews();
 
